@@ -19,7 +19,9 @@
 .c9 { width: 90% }
 
 img.center { display: block; margin: auto; }
-
+table.preps img { width: 200px; height: 200px; border-radius: 100px;}
+table.preps td {background: none; text-align: center}
+table.preps small {font-size: 80%;}
 plus, minus { display: list-item; list-style-type: none; }
 plus:before { display: inline; content: "➕"; font-weight: bold; margin-right: 0.5em; color: green }
 minus:before { display: inline; content: "➖"; font-weight: bold; margin-right: 0.5em; color: red }

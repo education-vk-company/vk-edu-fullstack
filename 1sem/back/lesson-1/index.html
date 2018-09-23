@@ -1,0 +1,356 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Backend разработка</h1>
+        <p><a href="mailto:a.elizarova@corp.mail.ru">Алена Елизарова</a></p>
+        <p><a href="mailto:a.kukhtichev@corp.mail.ru">Антон Кухтичев</a></p>
+        <p><a href="mailto:mialinx@gmail.com">Дмитрий Смаль</a></p>
+    </header>
+
+    <section class="slide"><div>
+        <h2>О преподавателях</h2>
+        <table class="preps">
+            <tr>
+                <td>
+                    <img src="pictures/alena.png"><br>
+                    <h4>Алена Елизарова</h4><br>
+                    <small>a.elizarova@corp.mail.ru</small>
+                </td>
+                <td>
+                    <img src="pictures/anton.jpg"><br>
+                    <h4>Антон Кухтичев</h4><br>
+                    <small>a.kukhtichev@corp.mail.ru</small>
+                </td>
+                <td>
+                    <img src="pictures/dima.jpg"><br>
+                    <h4>Дмитрий Смаль</h4><br>
+                    <small>mialinx@gmail.com</small>
+                </td>
+            </tr>
+        </table>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>О курсе</h2>
+        <ul>
+            <li>Цель курса - разработать мессенджер (a-la Slack)</li>
+            <li>В паре с курсом по Frontend</li>
+            <li>Разработка - индивидуальная, без команд</li>
+            <li>Задание и разбалловка для всех одна</li>
+            <li>О творческом подходе...</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Материалы</h2>
+        <ul>
+            <li>Тех. задание: <a href="https://github.com/mialinx/tt-fullstack/blob/master/spec/task.md">task.md</a></li>
+            <li>Схема базы данных: <a href="https://github.com/mialinx/tt-fullstack/blob/master/spec/database.png">database.png</a></li>
+            <li>Описание API: TODO</li>
+            <li>разбалловка: <a href="https://github.com/mialinx/tt-fullstack/blob/master/1sem/back/points.md">points.md</a></li>
+            <li>Вообще: <a href="https://github.com/mialinx/tt-fullstack">https://github.com/mialinx/tt-fullstack</a></li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>О занятиях</h2>
+        <ul>
+            <li>Посещение - обязательное, check-in первым делом!</li>
+            <li>Половина занятия - теория</li>
+            <li>Вторая половина - мастер класс и помощь с ДЗ</li>
+            <li>Оценка ставится на основе баллов</li>
+            <li>Баллы - только за работающий фукционал</li>
+            <li>Любая разработка и сдача - через Git</li>
+        </ul>
+    </div></section>
+
+
+    <section class="slide"><div>
+        <h2>Коротко о программе</h2>
+        <ul>
+            <li>Интенсив по Python</li>
+            <li>HTTP, Web сервера</li>
+            <li>Flask, Application Server</li>
+            <li>JSON, API, RPC</li>
+            <li>Работа с СУБД</li>
+            <li>Авторизация</li>
+            <li>Real-Time сообщения</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Архитектура Web</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Клиент-серверная архитектура</h2>
+        <img src="pictures/client_server.png" class="center">
+    </div></section>
+
+
+    <section class="slide"><div>
+        <p>Основное назначение браузера - отображение HTML страниц.<br>
+           Однако, возможности современных браузеров огромны.<br>
+           Существуют операционные системы и 3D-игры, работающие внутри браузеров!</p>
+        <p><a href="http://www.evolutionoftheweb.com/">www.evolutionoftheweb.com</a></p>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Сценарий работы классического web приложения</h2>
+        <ul>
+            <li>Пользователь вводит URL</li>
+            <li>Браузер загружает Web страницу - HTML документ</li>
+            <li>Браузер анализирует (parse) HTML и загружает доп. ресурсы</li>
+            <li>Браузер отображает (rendering) HTML страницу</li>
+            <li>Пользователь переходит по гиперссылке или отправляет форму</li>
+            <li>Цикл повторяется</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <img src="pictures/classic_web.png" class="place">
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Сценарий работы современного приложения</h2>
+        <ul>
+            <li>Браузер загружает Web страницу, ресурсы и отображает ее</li>
+            <li>JavaScript загружает данные с помощью AJAX запросов</li>
+            <li>JavaScript обеспечивает полноценный UI на странице</li>
+            <li>Пользователь взаимодействуюет с UI, что приводит к вызову JavaScript обработчиков</li>
+            <li>JavaScript обновляет данные на сервере или загружает новые данные, используя AJAX</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <img src="pictures/modern_web.png" class="place">
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Особенности современных Web-приложений</h2>
+        <ul>
+            <li>UI находится на 1 или нескольких страницах (one-page)</li>
+            <li>UI полностью статичен: HTML, CSS, JS - статические файлы</li>
+            <li>Логика UI полностью работает на стороне клиента</li>
+            <li>Используется шаблонизация в JavaScript</li>
+            <li>Application сервер возвращает чистые данные (JSON или XML, а не HTML)</li>
+        </ul>
+    </div></section>
+
+
+    <section class="slide shout"><div>
+        <h2>Рабочее окружение</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Устанавливаем Ubuntu</h2>
+        <p>
+            <img src="pictures/vbox_ubuntu.png" style="width: 35%; float: right;">
+            <h4>Скачиваем VirtualBox</h4>
+            <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>
+            <h4>Скачиваем образ Ubuntu</h4>
+            <a href="https://www.ubuntu.com/download/desktop">https://www.ubuntu.com/download/desktop</a>
+            ...<br>
+            Profit!
+        </p>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Cтруктура директорий Linux</h2>
+        <script type="snippet" lang="plain">
+            /
+            |--home/      
+            |    |--nuf/             # домашняя директория
+            |--usr
+            |    |--bin/             # исполняемые файлы (программы)
+            |    |    |--python
+            |    |--lib/             # библиотеки (например so)
+            |         |--python2.7/  # библиотеки *.py
+            |--etc/                  # настройки серверов
+            |    |--nginx/           # настройки nginx
+            |--var/                  # разное
+            |    |--lib/             # часто файлы баз данных
+            |--tmp/                  # временные файлы
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка программ в Linux</h2>
+        <script type="snippet" lang="bash">
+            sudo apt install git    # установить известную программу
+            sudo apt search nodejs  # поискать среди доступных
+            sudo apt remove git     # удалить программу
+            sudo apt purge nginx    # удалить программу и все ее файлы
+        </script>
+        <p>
+            <b>apt</b> - пакетный менеджер Ubuntu (yum, pacman, emerge...)
+            <br>
+            <b>sudo</b> - временное повышение привелегий до root
+        </p>
+        В репозиториях ОС обычно не самые свежие программы.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка (например) NodeJS v8</h2>
+        <p>
+            Гуглим <b>nodejs8 download ubuntu</b><br>
+            Переходим на офф. сайт <br><a href="https://nodejs.org/en/download/package-manager/">https://nodejs.org/en/download/package-manager/</a><br>
+            Там примерно следующее:
+        </p>
+        <script type="snippet" lang="bash">
+            curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+            sudo apt install -y nodejs
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Отдельный репозиторий NodeJS</h2>
+        После этого Ubuntu будет знать откуда скачать и обновить NodeJS
+        <br><br>
+        <script type="snippet" lang="bash">
+            [nuf@nuftop tmp]$ cat /etc/apt/sources.list.d/nodesource.list
+            deb https://deb.nodesource.com/node_8.x xenial main
+            deb-src https://deb.nodesource.com/node_8.x xenial main
+        </script>
+    </div></section>
+
+
+    <section class="slide"><div>
+        <h2>Задание</h2>
+        <img src="pictures/vovka.png" style="float: right; width: 25%;">
+        Установить:
+        <ul>
+            <li>Python 3</li>
+            <li>NodeJS 8</li>
+            <li>Nginx - подойдет любой</li>
+            <li>Postgres - подойдет любой</li>
+            <li>Git - подойдет любой</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Структура директорий проекта</h2>
+        <script type="snippet" lang="plain">
+        /home/nuf/quack         # корневая директория вашего проекта
+            |--public/          # директория с файлами для Frontend
+            |--node_modules/    # Библиотеки для JavaScript (*)
+            |--package.json     # Описание зависимостей для JavaScript
+            |
+            |--app/             # Директория с Python кодом приложения
+            |--tests/           # Тесты вашего приложения
+            |--venv/            # Виртуальное окружение, библиотеки Python (*)
+            |--requirements.txt # Описание зависимостей для Python
+            |
+            |--sql/             # SQL скрипты, описание базы данных
+            |--.gitignore       # Настройки файлов для Git
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Работа с Git</h2>
+        <script type="snippet" lang="plain">
+            git init                               # создать новый репозиторий
+            # или
+            git clone git@github.com:nuf/quack.git # склонировать
+            git status                             # посмотреть статус файлов
+            git add some_file some_dir             # Добавить файлы в индекс
+            git commit                             # сформировать новый комит
+            git push                               # отправить изменения в github
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Содержимое .gitignore</h2>
+        <script type="snippet" lang="plain">
+            node_modules/  
+            venv/
+            *.pyc
+            *.swo
+            *.swp
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка библиотек Python (1)</h2>
+        <p>
+            <b>PyPi</b> - централизованный репозиторий библиотек для Python<br>
+            <a href="https://pypi.org/">https://pypi.org/</a><br>
+            Для установки библиотек используется <b>pip</b>
+        </p>
+        
+        <script type="snippet" lang="bash">
+            # Устанавливаем pip3
+            sudo apt install python3-pip 
+            # А затем уже библиотеки Python
+            sudo pip3 install flask      # в систему 
+            pip3 install --user py.test  # или только для себя
+            # Или ...
+        </script>
+
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Использование VirtualEnv</h2>
+        <b>virtualenv</b> - программа для установки отдельного набора библиотек "для проекта"
+        <script type="snippet" lang="bash">
+            # Устанавливаем сам virtualenv
+            pip3 install --user virtualenv
+            # Переходим в директорию проекта
+            cd /home/nuf/quack
+            # Создаем виртуальное окружение в директории  venv
+            virtualenv venv
+            # "Активируем" его
+            source ./venv/bin/activate
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка библиотек Python (2)</h2>
+        <script type="snippet" lang="bash">
+            # Устанавливаем необходимые библиотеки в venv
+            pip3 install flask pytest psycopg2
+            
+            # "Запоминаем" версии установленных библиотек
+            pip3 freeze > requirements.txt
+        </script>
+        Не забываем закомитить файл <code>requirements.txt</code><br>
+        Но не директорию venv! (она должна быть в <code>.gitignore</code>)
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Задание</h2>
+        <img src="pictures/vovka.png" style="float: right; width: 25%;">
+        Установить:
+        <ul>
+            <li>flask</li>
+            <li>gunicorn</li>
+            <li>psycopg2</li>
+            <li>pylint</li>
+            <li>pytest</li>
+            <li>pytest-flask</li>
+            <li>Flask-JSONRPC</li>
+            <li>Authlib</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <center><h2>Спасибо за внимание!</h2></center>
+        <img src="pictures/volk.jpg" class="center">
+    </div></section>
+    
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+</body>
+</html>
