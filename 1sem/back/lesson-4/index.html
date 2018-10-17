@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Backend разработка</h1>
+        <p><a href="https://github.com/toshunster/">Антон Кухтичев</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2>Application Server</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Теоретическая часть</h2>
+        <ul>
+            <li>Паттерн MVC;</li>
+            <li>Фреймворк Flask;</li>
+            <li>Запросы, обработчики, маршруты;</li>
+            <li>Обработка параметров запроса;</li>
+            <li>Генерация ответов;</li>
+            <li>Работа с заголовками;</li>
+            <li>GET, POST и другие методы запросов.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Практическая часть</h2>
+        <ul>
+            <li>Простой Flask проект;</li>
+            <li>Реализация заглушек API.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide shout"><div>
+        <h2>Flashback</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <img width="90%" src="pictures/web_sarvar.png" class="place"/>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Backend (application) сервер</h2>
+        <ul>
+            <li>Роль application сервера заключается в исполнении бизнес-логики приложения и генерации динамических документов;</li>
+            <li>На каждый HTTP запрос application сервер запускает некоторый обработчик в приложении. Это может быть функция, класс или программа, в зависимости от технологии.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Паттерн MVC</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Паттерн MVC</h2>
+        Схема разделения данных приложения, пользовательского интерфейса и управляющей логики на три отдельных компонента:
+        <ul>
+            <li>Модель (Model) предоставляет данные и реагирует на команды контроллера, изменяя своё состояние;</li>
+            <li>Представление (View) отвечает за отображение данных модели пользователю, реагируя на изменения модели;</li>
+            <li>Контроллер (Controller) интерпретирует действия пользователя, оповещая модель о необходимости изменений.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <img width="90%" src="pictures/mvc.png" class="place"/>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Соглашение о именовании</h2>
+        <table>
+            <tr><th>MVC</th><th>Flask</th></tr>
+            <tr><td>Model</td><td>Model</td></tr>
+            <tr><td>Router</td><td>Декоратор flask.Flask.route()</td></tr>
+            <tr><td>Controller</td><td>views</td></tr>
+            <tr><td>View</td><td>templates</td></tr>
+        </table>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Фреймворк Flask</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Flask</h2>
+        Набор минималистичных каркасов веб-приложений, сознательно предоставляющих лишь самые базовые возможности.
+        <ul>
+            <li>Разработан в 2010 году австрийским разработчиком Армином Ронахером;</li>
+            <li>Язык программирования Python;</li>
+            <li>Набор инструментов Werkzeug;</li>
+            <li>SQLAlchemy;</li>
+            <li>Шаблонизатор Jinja2.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Flask vs. Django</h2>
+        <ul>
+            <li>Flask реализуется с минимальными надстройками, которые всецело предоставлены аддонам или разработчику;</li>
+            <li>Django следует философии «все включено», и даёт большой ассортимент для работы;</li>
+            <li>У Flask нет собственной ORM, поэтому обычно подключается библиотека SQLAlchemy;</li>
+            <li>У Django чёткая стурктура проекта, у Flask'а --- нет.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>SQLAlchemy</h2>
+        <ul>
+            <li>Библиотека для работы с базами данных при помощи языка SQL;</li>
+            <li>Реализует технологию программирования ORM;</li>
+        </ul>    
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Blueprint</h2>
+        Концепция для создания компонентов приложений и поддержки общих шаблонов внутри приложения или между приложениями.
+        <script type="snippet" lang="python">
+        from flask import Blueprint, render_template, abort
+        from jinja2 import TemplateNotFound
+
+        simple_page = Blueprint('simple_page', __name__,
+                                template_folder='templates')
+
+        @simple_page.route('/<page>')
+        def show(page):
+            return render_template('pages/%s.html' % page)
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Jinja2</h2>
+        <ul>
+            <li></li>
+        </ul>
+        <script type="snippet" lang="html">
+            <title>{% block title %}{% endblock %}</title>
+            <ul>
+            {% for user in users %}
+                <li><a href="{{ user.url }}">{{ user.username }}</a></li>
+            {% endfor %}
+            </ul>
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Werkzeug</h2>
+        Набор инструментов WSGI, стандартного интерфейса Python для развертывания веб-приложений и взаимодействия между ними и различными серверами разработки.
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Структура Flask проекта</h2>
+        
+        <script type="snippet" lang="plain">
+            config.py
+            requirements.txt
+            run.py
+            instance/
+                config.py  # Добавляем в .gitignore
+            app/
+                __init__.py
+                views.py
+                models.py
+                forms.py
+                static/
+                templates/
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Запросы, обработчики, маршруты</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Контекст запроса</h2>
+        
+        <ul>
+            <li><b>request</b> - данные поступившего запроса;</li>
+        </ul>
+        <script type="snippet" lang="python">
+        from flask import request
+        
+        # Инициализация приложения
+
+        @app.before_request
+        def before_request():
+            g.db = connect_db()
+        
+        @app.teardown_request
+        def teardown_request(exception):
+            g.db.close()
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Маршрутизация</h2>
+        Три способа определить правила для маршрутизации:
+        <ul>
+           <li>Декоратор flask.Flask.route();</li>
+           <li>Функция flask.Flask.add_url_rule();</li>
+           <li>Напрямую обратиться к Werkzeug через flask.Flask.url_map</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Маршрутизация</h2>
+        <script type="snippet" lang="python">
+            from flask import Flask
+            app = Flask(__name__)
+            # ...
+            def index():
+                if request.method == 'OPTIONS':
+                    # custom options handling here
+                    ...
+                return 'Hello World!'
+            index.provide_automatic_options = False
+            index.methods = ['GET', 'OPTIONS']
+
+            app.add_url_rule('/', index)
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Маршрутизация</h2>
+        Декоратор flask.Flask.route() используется для связывания функций с URL
+        <script type="snippet" lang="python">
+            from flask import Flask
+            app = Flask(__name__)
+            # ...
+            @app.route('/')
+            def index():
+                return "Index page"
+            
+            @app.route('/hello')
+            def hello():
+                return 'Hello, World'
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Использование переменных</h2>
+        Для добавления переменной части в URL вы можете пометить эти разделы, как <b>&lt;variable_name&gt;</b>
+        <script type="snippet" lang="python">
+            @app.route('/user/<username>')
+            def show_user_profile(username):
+                # show the user profile for that user
+                return 'User {}'.format( username )
+            
+            @app.route('/post/<int:post_id>')
+            def show_post(post_id):
+                # show the post with the given id, the id is an integer
+                return 'Post {}'.format( post_id )
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Типы переменных</h2>
+        <ul>
+            <li><b>string</b> (по умолчанию) - принимает любой текст без слешей;</li>
+            <li><b>int</b> - принимает целый числа;</li>
+            <li><b>float</b> - принимает вещественные числа;</li>
+            <li><b>path</b> - как и string, но принимает слеши;</li>
+            <li><b>any</b> - любой аргумент из списка;</li>
+            <li><b>uuid</b> - принимает UUID строки.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <script type="snippet" lang="python">
+        from flask import Flask, url_for, redirect
+        
+        # Инициализация приложения app.
+        @app.route('/')
+        @app.route(/<string:name>)
+        def index(name="Gustavo"):
+            return "Index page, {}".format(name)
+        
+        @app.route('/blog/'):
+        def blog():
+            redirect( url_for('index', name="Mike") )
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Обработка параметров запроса</h2>
+    </div></section>
+    
+    <section class="slide"><div>
+        Параметры запроса хранятся в request, но в разных переменных:
+        <ul>
+            <li><b>request.args</b> - параметры строки запроса (всё что после ?name1=value1&name2=value2);</li>
+            <li><b>request.form</b> - параметры POST запроса формы (тип multipart/form-data);</li>
+            <li><b>request.get_json()</b> - параметры POST запроса (использование application/json);</li>
+        </ul>
+        <script type="snippet" lang="python">
+            # Идём по урлу /?name=Jack
+            @app.route('/')
+            def index():
+                name = request.args.get('name', "Default")
+                return name
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Генерация ответов</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2></h2>
+        
+        <script type="snippet" lang="python">
+        from flask import Response, jsonify, json
+
+        @app.route('/hello', methods = ['GET'])
+        def api_hello():
+            data = {
+                'hello'  : 'world',
+                'number' : 3
+            }
+            js = json.dumps(data)
+
+            resp = Response(js, status=200, mimetype='application/json')
+            # или использовать этот код
+            # resp = jsonify(data)
+            # resp.status_code = 200
+            resp.headers['Link'] = 'http://luisrei.com'
+
+            return resp
+        </script>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div></section>
+    
+
+    <section class="slide shout"><div>
+        <h2>Работа с заголовками</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        Заголовки запроса можно найти в <b>request.headers</b>
+        <script type="snippet" lang="python">
+        @app.route('/api/messages', methods = ['POST'])
+        def api_message():
+        
+            if request.headers['Content-Type'] == 'text/plain':
+                return "Text Message: " + request.data
+        
+            elif request.headers['Content-Type'] == 'application/json':
+                return "JSON Message: " + json.dumps(request.json)
+        
+            # Обрабатываем другие заголовки
+        
+            else:
+                abort(415)
+        </script>
+    </div></section>
+    
+    <section class="slide shout"><div>
+        <h2>GET, POST и другие методы запросов</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>HTTP методы</h2>
+        <ul>
+            <li><b>GET</b> - получение документа;</li>
+            <li><b>HEAD</b> - получение только заголовков;</li>
+            <li><b>POST</b> - отправка данных на сервер;</li>
+            <li>PUT - отправка документа на сервер.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        Передаём методы в параметре methods для декоратора route.
+        <script type="snippet" lang="python">
+        @app.route('/login', methods=['GET', 'POST'])
+        def login():
+            if request.method == 'POST':
+                return do_the_login()
+            else:
+                return show_the_login_form()
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Материалы</h2>
+        <ul>
+            <li><a href="http://flask.pocoo.org/">Документация Flask</a></li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Домашнее задание</h2>
+        <ul>
+            <li>Создать и запустить Flask проект (3 балла)</li>
+            <li>Реализовать "заглушки" для всех методов API, используя json.dumps (4 балла)</li>
+            <li>Обрабтывать только нужные методы (GET/POST) (1 балл)</li>
+            <li>Написать тесты (pytest,pytest-flask) проверяющие работу (достаточно проверить) (3 балла)</li>
+        </ul>
+        <b>Срок сдачи:</b> следующее занятие.
+    </div></section>
+
+    <section class="slide"><div>
+        <center><h2>Спасибо за внимание!</h2></center>
+        <img src="pictures/volk.jpg" class="center">
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
