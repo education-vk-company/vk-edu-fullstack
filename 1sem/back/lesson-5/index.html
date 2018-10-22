@@ -77,12 +77,12 @@
         $ psql db_name
         </script>
 
-        Подключиться через TCP сокет
+        Подключение через TCP сокет
         <script type="snippet" lang="bash">
         $ psql --host=127.0.0.1 --user=db_user db_name
         </script>
 
-        Если вы хотите подкючаться к своей базе без ввода пароля
+        Если вы хотите подключаться к своей базе без ввода пароля
         <script type="snippet" lang="sql">
             postgres=# CREATE USER your_linux_user;
             postgres=# GRANT ALL ON DATABASE db_name TO your_linux_user;
@@ -135,7 +135,7 @@
     </div></section>
 
     <section class="slide"><div>
-        <h2>Создание таблиц</h2>
+        <h2>Создание таблиц (2)</h2>
         <script type="snippet" lang="sql">
             CREATE TABLE messages (
 
@@ -168,7 +168,7 @@
     </div></section>
 
     <section class="slide"><div>
-        <h2>Добавление данных в таблицу</h2>
+        <h2>Добавление данных</h2>
         <script type="snippet" lang="sql">
             INSERT INTO users (user_nick, user_name)
             VALUES ('vasily.pupkin', 'Василий Пупкин'),
@@ -206,7 +206,7 @@
     <section class="slide"><div>
         <h2>Выборка из нескольких таблиц</h2>
         <script type="snippet" lang="sql">
-            SELECT user_nick, user_name, messages.*
+            SELECT user_nick AS author, user_name, messages.*
             FROM messages 
             JOIN users USING (user_id)
             WHERE user_id = 3
@@ -295,11 +295,10 @@
         <ul>
             <li><code>execute(sql, params)</code> - выполнить SQL запрос</li>
             <li><code>callproc(procname, params)</code> - вызвать хранимую процедуру</li>
-            <li><code>callproc(procname, params)</code> - вызвать хранимую процедуру</li>
             <li><code>fetchone()</code> - получить первую строку результата</li>
             <li><code>fetchall()</code> - получить все строки результата</li>
-            <li><code>.lastrowid</code> - значение SERIAL ключа после INSERT</li>
             <li><code>close()</code> - закрыть курсор, освободить ресурсы СУБД</li>
+            <li><code>.lastrowid</code> - (аттрибут) значение SERIAL ключа после INSERT</li>
         </ul>
     </div></section>
 
@@ -345,7 +344,6 @@
         <h2>Организация кода во Flask</h2>
         <b>!!!</b> Отделить код для работы с базой от контроллеров <b>!!!</b>
         <script type="snippet" lang="text">
-        .
         ├── app
         │   ├── app.py            # Flask приложение
         │   ├── handlers.py       # Контроллеры
