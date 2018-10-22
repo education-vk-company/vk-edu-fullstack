@@ -125,11 +125,11 @@
 
                 user_id SERIAL PRIMARY KEY,
 
-                user_nick TEXT NOT NULL UNIQUE
-                    CHECK (length(user_name) < 32),
+                nick TEXT NOT NULL UNIQUE
+                    CHECK (length(name) < 32),
 
-                user_name TEXT NOT NULL
-                    CHECK (length(user_name) < 32)
+                name TEXT NOT NULL
+                    CHECK (length(name) < 32)
             )
         </script>
     </div></section>
@@ -144,10 +144,10 @@
                 user_id INTEGER NOT NULL
                     REFERENCES users(user_id),
 
-                message_text TEXT NOT NULL
-                    CHECK (length(message_text) < 65536),
+                content TEXT NOT NULL
+                    CHECK (length(content) < 65536),
 
-                message_added_at TIMESTAMP NOT NULL DEFAULT NOW() 
+                added_at TIMESTAMP NOT NULL DEFAULT NOW() 
             )
         </script>
     </div></section>
@@ -156,10 +156,10 @@
         <h2>Изменение и удаление таблиц</h2>
         <script type="snippet" lang="sql">
             ALTER TABLE users
-                ADD COLUMN user_avatar TEXT DEFAULT NULL,
-                DROP CONSTRAINT users_user_name_check, 
-                ADD CONSTRAINT users_user_name_check
-                    CHECK (length(user_name) < 64);
+                ADD COLUMN avatar TEXT DEFAULT NULL,
+                DROP CONSTRAINT users_name_check, 
+                ADD CONSTRAINT users_name_check
+                    CHECK (length(name) < 64);
 
             DROP TABLE users;
 
@@ -170,7 +170,7 @@
     <section class="slide"><div>
         <h2>Добавление данных</h2>
         <script type="snippet" lang="sql">
-            INSERT INTO users (user_nick, user_name)
+            INSERT INTO users (nick, name)
             VALUES ('vasily.pupkin', 'Василий Пупкин'),
                    ('another.user', 'Другой Юзер');
 
@@ -183,7 +183,7 @@
         <h2>Обновление и удаление данных</h2>
         <script type="snippet" lang="sql">
             UPDATE users 
-            SET user_name = 'Не такой как все'
+            SET name = 'Не такой как все'
             WHERE user_id = 2;
 
             DELETE FROM users
@@ -194,11 +194,11 @@
     <section class="slide"><div>
         <h2>Выборка из таблицы</h2>
         <script type="snippet" lang="sql">
-            SELECT message_id, message_text, message_added_at::DATE
+            SELECT message_id, content, added_at::DATE
             FROM messages
             WHERE user_id = 3
               AND message_id < 100500
-            ORDER BY message_added_at DESC
+            ORDER BY added_at DESC
             LIMIT 10
         </script>
     </div></section>
@@ -206,12 +206,12 @@
     <section class="slide"><div>
         <h2>Выборка из нескольких таблиц</h2>
         <script type="snippet" lang="sql">
-            SELECT user_nick AS author, user_name, messages.*
+            SELECT nick AS author, name, messages.*
             FROM messages 
             JOIN users USING (user_id)
             WHERE user_id = 3
               AND message_id < 100500
-            ORDER BY message_added_at DESC
+            ORDER BY added_at DESC
             LIMIT 10
         </script>
     </div></section>
@@ -239,7 +239,7 @@
     </div></section>
 
     <section class="slide"><div>
-        <img src="https://raw.githubusercontent.com/mialinx/tt-fullstack/master/spec/database.png" class="center">
+        <img src="../../../spec/database.png" class="center">
     </div></section>
 
     <section class="slide shout"><div>
@@ -349,7 +349,7 @@
         │   ├── handlers.py       # Контроллеры
         │   ├── db.py             # Утилиты для работы с СУБД
         │   ├── model.py          # Модели, конкретные запросы к СУБД
-        │   └── settings.py       # Настройки подключения
+        │   └── config.py         # Настройки подключения
         └── sql
             ├── 001_initial.sql
             └── 002_migration.sql
@@ -363,13 +363,13 @@
 
             import flask
             import psycopg2
-            import settings
+            import config
 
             def get_connection():
                 if not hasattr(flask.g, 'dbconn'):
                     flask.g.dbconn = psycopg2.connect(
-                        database=settings.DB_NAME, host=settings.DB_HOST,
-                        user=settings.DB_USER, password=settings.DB_PASS)
+                        database=config.DB_NAME, host=config.DB_HOST,
+                        user=config.DB_USER, password=config.DB_PASS)
                 return flask.g.dbconn
         </script>
     </div></section>
@@ -421,12 +421,12 @@
 
             def list_messages_by_chat(chat_id, limit):
                 return db.query_all("""
-                    SELECT user_id, user_nick, user_name,
-                           message_id, message_text, message_added_at
+                    SELECT user_id, nick, name,
+                           message_id, content, added_at
                     FROM messages
                     JOIN users USING (user_id) 
                     WHERE chat_id = %(chat_id)s
-                    ORDER BY message_added_at DESC
+                    ORDER BY added_at DESC
                     LIMIT %(limit)s
                 """, chat_id=int(chat_id), limit=int(limit))
         </script>
