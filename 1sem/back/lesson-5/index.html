@@ -273,9 +273,9 @@
                 print("Error while connecting to PostgreSQL", error)
             finally:
                 if connection:
-                    connection.close()
                     if cursor:
                         cursor.close()
+                    connection.close()
         </script>
     </div></section>
 
