@@ -1,0 +1,462 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Backend разработка</h1>
+        <p><a href="https://github.com/mialinx/">Дмитрий Смаль</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2>PostgreSQL</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка PostgreSQL</h2>
+
+        <img src="pictures/pg.png" style="float: right">
+
+        Установка
+        <script type="snippet" lang="bash">
+        sudo apt install postgresql-9.5  
+        </script>
+
+        Проверка подключения
+        <script type="snippet" lang="bash">
+        sudo -u postgres psql
+        </script>
+
+        Для пользователя <code>postgres</code> - <code>peer</code> авторизация
+        <code>/etc/postgresql/9.5/main/pg_hba.conf</code><br>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Пользователи и базы из коробки</h2>
+        Пользователи
+        <ul>
+            <li><code>postgres</code> - супер-пользователь внутри Postgres, может все</li>
+        </ul>
+        Базы данных
+        <ul>
+            <li><code>template1</code> - шаблонная база данных </li>
+            <li><code>template0</code> - шаблонная база данных на всякий случай</li>
+            <li><code>postgres</code> - база данных по-умолчанию, копия <code>template1</code></li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Пользователь и база проекта</h2>
+        Создать пользователя и базу
+        <script type="snippet" lang="sql">
+        postgres=# CREATE USER quack PASSWORD 'quack';
+        CREATE ROLE
+
+        postgres=# CREATE DATABASE quack OWNER quack;
+        CREATE DATABASE
+        </script>
+
+        Проверить подключение
+        <script type="snippet" lang="bash">
+        $ psql --host=localhost --user=quack quack
+        Password for user quack: *****
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Использование psql</h2>
+        Подключение через UNIX сокет, имя пользователя совпадает с пользователем Linux
+        <script type="snippet" lang="bash">
+        $ psql db_name
+        </script>
+
+        Подключение через TCP сокет
+        <script type="snippet" lang="bash">
+        $ psql --host=127.0.0.1 --user=db_user db_name
+        </script>
+
+        Если вы хотите подключаться к своей базе без ввода пароля
+        <script type="snippet" lang="sql">
+            postgres=# CREATE USER your_linux_user;
+            postgres=# GRANT ALL ON DATABASE db_name TO your_linux_user;
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Использование psql (2)</h2>
+        <ul>
+            <li><code>\?</code> показать список команд</li>
+            <li><code>\l</code> показать список баз данных</li>
+            <li><code>\с db_name2</code> подключиться к другой базе данных</li>
+            <li><code>\dt</code> показать список таблиц</li>
+            <li><code>\d table_name</code> показать колонки таблицы</li>
+            <li><code>\x</code> переключить режим вывода</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Язык SQL</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Типы данных</h2>
+        <ul>
+            <li><code>integer</code>, <code>bigint</code> - целое, 4/8 байт</li>
+            <li><code>serial</code>, <code>bigserial</code>- целое, 4/8 байт, авто-инкремент</li>
+            <li><code>timestamp</code> - дата и время, с точностью до микросекунд</li>
+            <li><code>text</code> - строка произвольной длинны</li>
+            <li><code>uuid</code> - UUID</li>
+            <li><code>jsonb</code> - JSON документ</li>
+        </ul>
+        <a href="https://www.postgresql.org/docs/9.5/static/datatype.html">https://www.postgresql.org/docs/9.5/static/datatype.html</a>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Создание таблиц</h2>
+        <script type="snippet" lang="sql">
+            CREATE TABLE users (
+
+                user_id SERIAL PRIMARY KEY,
+
+                nick TEXT NOT NULL UNIQUE
+                    CHECK (length(name) < 32),
+
+                name TEXT NOT NULL
+                    CHECK (length(name) < 32)
+            )
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Создание таблиц (2)</h2>
+        <script type="snippet" lang="sql">
+            CREATE TABLE messages (
+
+                message_id SERIAL PRIMARY KEY,
+
+                user_id INTEGER NOT NULL
+                    REFERENCES users(user_id),
+
+                content TEXT NOT NULL
+                    CHECK (length(content) < 65536),
+
+                added_at TIMESTAMP NOT NULL DEFAULT NOW() 
+            )
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Изменение и удаление таблиц</h2>
+        <script type="snippet" lang="sql">
+            ALTER TABLE users
+                ADD COLUMN avatar TEXT DEFAULT NULL,
+                DROP CONSTRAINT users_name_check, 
+                ADD CONSTRAINT users_name_check
+                    CHECK (length(name) < 64);
+
+            DROP TABLE users;
+
+            DROP TABLE users CASCADE; -- не повторять в production :)
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Добавление данных</h2>
+        <script type="snippet" lang="sql">
+            INSERT INTO users (nick, name)
+            VALUES ('vasily.pupkin', 'Василий Пупкин'),
+                   ('another.user', 'Другой Юзер');
+
+            INSERT INTO users
+            VALUES (5, 'the.good', 'Клинт Иствуд');
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Обновление и удаление данных</h2>
+        <script type="snippet" lang="sql">
+            UPDATE users 
+            SET name = 'Не такой как все'
+            WHERE user_id = 2;
+
+            DELETE FROM users
+            WHERE user_id % 2 = 0;
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Выборка из таблицы</h2>
+        <script type="snippet" lang="sql">
+            SELECT message_id, content, added_at::DATE
+            FROM messages
+            WHERE user_id = 3
+              AND message_id < 100500
+            ORDER BY added_at DESC
+            LIMIT 10
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Выборка из нескольких таблиц</h2>
+        <script type="snippet" lang="sql">
+            SELECT nick AS author, name, messages.*
+            FROM messages 
+            JOIN users USING (user_id)
+            WHERE user_id = 3
+              AND message_id < 100500
+            ORDER BY added_at DESC
+            LIMIT 10
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <img src="pictures/neo.jpg" style="width:100%">
+        <center>
+            <h3 style="font-size: 200%">I KNOW SQL</h3>
+            <a href="http://www.sql-ex.ru">http://www.sql-ex.ru</a>
+        </center>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Проектирование базы данных</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Правила проектирования</h2>
+        <ul>
+            <li>Отдельная сущность - отдельная таблица</li>
+            <li>Использовать синтетические первичные ключи</li>
+            <li>Отношение 1:N - внешний ключ</li>
+            <li>Отношение N:M - промежуточная таблица</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <img src="../../../spec/database.png" class="center">
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Работа с СУБД в Python</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Использование СУБД в Python</h2>
+        <a href="https://www.python.org/dev/peps/pep-0249/">PEP-249</a> - спецификация интерфейса к СУБД<br>
+        <code>psycopg2</code> - Python библиотека, реализующая этот интерфейс<br><br>
+        Основные объекты
+        <ul>
+            <li><b>Connection</b> -  соединение с базой данных</li>
+            <li><b>Cursor</b> - промежуточный объект для осуществления запросов и получения результатов</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Пример использования</h2>
+        <script type="snippet" lang="python">
+            import psycopg2
+            try:
+                connection = psycopg2.connect(
+                    user = "quack", password = "***", 
+                    host = "127.0.0.1", database = "quack")
+                cursor = connection.cursor()
+                cursor.execute("SELECT version();")
+                row = cursor.fetchone()
+                print("You are connected to - ", row, "\n")
+            except psycopg2.Error as error :
+                print("Error while connecting to PostgreSQL", error)
+            finally:
+                if connection:
+                    connection.close()
+                    if cursor:
+                        cursor.close()
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Методы Connection</h2>
+        <ul>
+            <li><code>cursor()</code> - создать новый объект Cursor</li>
+            <li><code>cursor(cursor_factory=psycopg2.extras.DictCursor)</code></li>
+            <li><code>commit()</code> - COMMIT, сохранить транзакцию в СУБД</li>
+            <li><code>rollback()</code> - ROLLBACK, отменить транзакцию в СУБД</li>
+            <li><code>close()</code> - закрыть соединение с СУБД</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Методы Cursor</h2>
+        <ul>
+            <li><code>execute(sql, params)</code> - выполнить SQL запрос</li>
+            <li><code>callproc(procname, params)</code> - вызвать хранимую процедуру</li>
+            <li><code>fetchone()</code> - получить первую строку результата</li>
+            <li><code>fetchall()</code> - получить все строки результата</li>
+            <li><code>close()</code> - закрыть курсор, освободить ресурсы СУБД</li>
+            <li><code>.lastrowid</code> - (аттрибут) значение SERIAL ключа после INSERT</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Транзакции</h2>
+        <b>Транзакция</b> - набор изменений в базе данных, которые либо применяются одновременно,
+        либо не применяются вообще. Все изменения в СУБД осуществляются в рамках транзакций.
+        <br>
+        <code>COMMIT</code> - сохранение транзакции в СУБД. После завершения СУБД дает гарантию
+        того что данные не будут потеряны. Дорогостоящая операция, осуществляет запись на диск.
+        <br>
+        <code>ROLLBACK</code> - отмена транзакции. Все изменения, произведенные в рамках транзакции, отменяются.
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Особенности СУБД в Web</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Особенности Web приложений</h2>
+        <ul>
+            <li>HTTP запросы - быстрые (~50мс)</li>
+            <li>Но их много (~100 / сек)</li>
+            <li>В рамках одного HTTP запроса ~ 10-20 SQL запросов</li>
+            <li>HTTP запросы могут быть успешными (2xx/3xx) или завершаться ошибкой (4xx/5xx)</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Следствия</h2>
+        <ul>
+            <li>Соединения с СУБД нужно кешировать</li>
+            <ul>
+                <li>В течение запроса</li>
+                <li>В течение жизни Application Server</li>
+                <li>Использовать внешний пул соединений (pg_bouncer)</li>
+            </ul>
+            <li>Удобно: 1 HTTP запрос = 1 транзакция</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Организация кода во Flask</h2>
+        <b>!!!</b> Отделить код для работы с базой от контроллеров <b>!!!</b>
+        <script type="snippet" lang="text">
+        ├── app
+        │   ├── app.py            # Flask приложение
+        │   ├── handlers.py       # Контроллеры
+        │   ├── db.py             # Утилиты для работы с СУБД
+        │   ├── model.py          # Модели, конкретные запросы к СУБД
+        │   └── config.py         # Настройки подключения
+        └── sql
+            ├── 001_initial.sql
+            └── 002_migration.sql
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Утилиты для СУБД</h2>
+        <script type="snippet" lang="python">
+            # app/db.py
+
+            import flask
+            import psycopg2
+            import config
+
+            def get_connection():
+                if not hasattr(flask.g, 'dbconn'):
+                    flask.g.dbconn = psycopg2.connect(
+                        database=config.DB_NAME, host=config.DB_HOST,
+                        user=config.DB_USER, password=config.DB_PASS)
+                return flask.g.dbconn
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Утилиты для СУБД (2)</h2>
+        <script type="snippet" lang="python">
+            # app/db.py
+
+            import psycopg2.extras
+
+            def get_cursor():
+                return get_connection().cursor(
+                    cursor_factory=psycopg2.extras.DictCursor)
+
+            def query_one(sql, **params):
+                with get_cursor() as cur:
+                    cur.execute(sql, params)
+                    return dict(cur.fetchone())
+
+            # TODO: query_all => [ {} ]
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Транзакции и HTTP запросы</h2>
+        <script type="snippet" lang="python">
+            # app/db.py
+            import flask
+
+            def _rollback_db(sender, exception, **extra):
+                if hasattr(flask.g, 'dbconn'):
+                    conn = flask.g.dbconn
+                    conn.rollback()
+                    conn.close()
+                    delattr(flask.g, 'dbconn')
+
+            flask.got_request_exception.connect(_rollback_db, app)
+
+            # TODO: _commit_db
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Модели в Web приложении</h2>
+        <script type="snippet" lang="python">
+            # app/model.py
+            import db
+
+            def list_messages_by_chat(chat_id, limit):
+                return db.query_all("""
+                    SELECT user_id, nick, name,
+                           message_id, content, added_at
+                    FROM messages
+                    JOIN users USING (user_id) 
+                    WHERE chat_id = %(chat_id)s
+                    ORDER BY added_at DESC
+                    LIMIT %(limit)s
+                """, chat_id=int(chat_id), limit=int(limit))
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>И тогда в контроллере</h2>
+        <script type="snippet" lang="python">
+            # app/handlers.py
+            from flask import request, jsonify
+            import model
+            from app import app
+
+            @app.route('/messages/')
+            def messages():
+                chat_id = int(request.args.get('chat_id'))
+                messages = model.list_messages_by_chat(chat_id)
+                return jsonify(messages)
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <center><h2>Спасибо за внимание!</h2></center>
+        <img src="pictures/volk.jpg" class="center">
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
