@@ -1,0 +1,409 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Углубленная Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Углубленная Backend разработка</h1>
+        <p><a href="https://github.com/mialinx/">Дмитрий Смаль</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2 style="font-size: 340%">Контейнеризация</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Что это такое ?</h2>
+        <ul>
+            <li>Изоляция процессов</li>
+            <li>Ограничение ресурсов</li>
+            <ul>
+                <li>CPU</li>
+                <li>RSS</li>
+                <li>I/O</li>
+                <li>Disk usage</li>
+            </ul>
+            <li>Экосистема образов</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>vs Виртуализация</h2>
+        <ul>
+            <plus>Легковеность</plus>
+            <plus>Почти нет накладных расходов</plus>
+            <plus>Готовые образы, инфраструктура доставки</plus>
+            <minus>ОС / Ядро фиксированы</minus>
+            <minus>Худшая безопасность</minus>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Зачем это нужно ?</h2>
+        <ul>
+            <li>Повышение утилизации железа</li>
+            <li>Гибкое управление зависимостями</li>
+            <li>Способ доставки ПО на сервера</li>
+            <li>Простое разворачивание тестовых сред</li>
+            <li>(*) Декларативное описание структуры проетка</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Системы контейнеризации</h2>
+        <img src="pictures/docker_logo.png" style="width: 200px">
+        <img src="pictures/lxc_logo.png" style="width: 400px; position: relative; right: -100px">
+        <br>
+        <img src="pictures/rkt_logo.png" style="width: 200px">
+        <img src="pictures/open_vz_logo.png" style="width: 400px; position: relative; top: -80px; right: -100px;">
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Механизмы</h2>
+        <b>namespaces</b>
+        <p>Механизм изоляции: PID, NET, MNT, USER, ...</p>
+        <b>cgroups</b>
+        <p>Механизм ограничения ресурсов процесса</p>
+        <script type="snippet" lang="bash">
+        mkdir /sys/fs/cgroup/memory/new_group
+        echo 655360 > /sys/fs/cgroup/memory/new1/memory.limit_in_bytes
+        echo `pidof project` > /sys/fs/cgroup/memory/new1/tasks
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Docker</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка Docker</h2>
+        <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a>
+        <br>
+        На 27.10.2018
+        <script type="snippet" lang="bash">
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+            sudo add-apt-repository \
+            "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+            $(lsb_release -cs) stable"
+
+            sudo apt-get update
+
+            sudo apt-get install docker-ce
+
+            sudo usermod -G docker `id -un`
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Контейнеры</h2>
+        <p><b>Контейнер / Container</b> - группа процессов работающих в изолированном
+            окружении, в своей файловой системе, возможно, с ограничем ресурсов.
+        </p>
+        <p>
+            Контейнер может содержать как одну запущенную программу (например Nginx),
+            так и целое окружение (init, bash, и т.д.)
+        </p>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Основные команды</h2>
+        <script type="snippet" lang="bash">
+            docker run -d nginx   # запустить контейнер 
+            docker ps             # список контейнеров
+            docker ps -a          # список всех контейнеров
+            docker logs 5a592c    # посмотеть логи
+            docker exec -it 5a592c bash  # "подключиться"
+            docker stop 5a592c    # остановить контейнер
+            docker rm 5a592c      # удалить контейнер
+            docker inspect 5a592c # информация о контейнер
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Образы</h2>
+        <p><b>Образ / Image</b> - образец (шаблон) файловой системы для контейнера.
+            Образ содержит все необходимые образу программы и файлы настроек,
+            но не содержит пользовательских данных.
+        </p>
+        <p>
+            Образы могут наслаиваться друг на друга.
+        </p>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Основные команды</h2>
+        <script type="snippet" lang="bash">
+            docker pull nginx      # скачать образ из registry
+            docker images          # cписок образов
+            docker rmi nginx       # удалить образ
+            docker run -d nginx    # запустить контейнер
+                                   # на основе образа 
+            docker push my_proj:v2 # загрузить образ в registry
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>OverlayFS</h2>
+        <img src="pictures/overlay.png" style="width:110%; position: relative; left: -80px">
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Порты и директории (1)</h2>
+
+        Ок, а как использовать nginx ?
+        <br>
+        <script type="snippet" lang="bash">
+            docker run -d --name ngx1 nginx
+            docker inspect -f '{{.NetworkSettings.IPAddress}}' ngx1
+            # 172.18.0.2
+        </script>
+
+        Проверяем
+        <br>
+        <a href="http://172.18.0.2/">http://172.18.0.2/</a>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Порты и директории (2)</h2>
+        <script type="snippet" lang="bash">
+            docker run -d \
+                -p 8080:80 \ 
+                -v /home/user/proj:/usr/share/nginx/html:ro \
+                -e NGINX_HOST=foobar.com \
+                --name ngx1 \
+                nginx
+        </script>
+        <code>-p local_port:container_port</code> - проброс порта
+        <br>
+        <code>-v local_dir:container_dir</code> - проброс директории (volume)
+        <br>
+        <code>-e NAME=val</code> - установка переменной окружения
+    </div></section>
+
+    <section class="slide"><div>
+        <img src="pictures/scheme.png" style="height: 100%; position: relative; top: -50px; right: -50px;">
+    </div></section>
+
+
+    <section class="slide shout"><div>
+        <h2>Dockerfile</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Как собрать свой образ?</h2>
+        <script type="snippet" lang="bash">
+        /path/to/project    # BuildDir
+            ├── ask
+            ├── askme
+            ├── templates
+            ├── static
+            ├── manage.py
+            ├── Dockerfile          # Сборка
+            ├── docker-compose.yaml # Оркестрация
+            ├── .db_data            # Volume для базы
+            └── requirements.txt
+        </script>
+    </div></section>
+    
+
+    <section class="slide"><div>
+        <h2>Синтаксис Dockerfile</h2>
+        <script type="snippet" lang="dockerfile">
+            FROM ubuntu:16.04
+            ADD . /app
+            RUN apt-get update
+            RUN apt-get install -y python3.5 python3-pip
+            RUN pip3 install -r /app/requirements.txt
+            EXPOSE 8000
+            USER nobody
+            WORKDIR /app
+            CMD /usr/local/bin/gunicorn askme.wsgi
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Синтаксис Dockerfile</h2>
+        <ul>
+            <li><code>FROM</code> - базовый образ</li>
+            <li><code>ADD</code> - добавить файлы из сборочной директории</li>
+            <li><code>RUN</code> - запустить команду при сборке образа</li>
+            <li><code>EXPOSE</code> - информация о том какой порт прослушивается</li>
+            <li><code>CMD</code> - команда, которая будет запущена при старте контейнера</li>
+            <li><code>USER</code> - пользователь под которым будет запущена <code>CMD</code></li> 
+            <li><code>WORKDIR</code> - директория в которой будет запущена <code>CMD</code></li> 
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Сборка образа</h2>
+        <script type="snippet" lang="bash">
+        docker build -t askme:v2 /path/to/project
+        </script>
+        <br>
+        <code>askme:v2</code> - название (и возможно тэг) образа
+        <br>
+        <code>/path/to/project</code> - путь к директории с Dockerfile
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Образ для разработки</h2>
+        В Dockerfile указываем точку монтирования
+        <br>
+        <script type="snippet" lang="dockerfile">
+            FROM ubuntu:16.04
+            ...
+            VOLUME /app
+            ...
+        </script>
+
+        При запуске образа монтируем директорию с проектом
+        <br>
+        <script type="snippet" lang="bash">
+            docker run -d -v /path/to/project:/app askme
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Docker Compose</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Проблема оркестрации</h2>
+        Для запуска нескольких взаимодействующих контейнеров
+        нужно согласовать:<br>
+        <img src="pictures/compose.png" style="float: right">
+        <ul>
+            <li>IP адреса / имена хостов</li>
+            <li>Логины и пароли</li>
+            <li>Порядок запуска</li>
+            <li>Проверка работоспособности</li>
+        </ul>
+        Это нужно сделать <b>воспроизводимым</b>.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка Compose</h2>
+        <a href="https://docs.docker.com/compose/install/">https://docs.docker.com/compose/install/</a>
+        <br>
+        На 27.10.2018
+        <script type="snippet" lang="bash">
+        sudo curl -L \
+        "https://github.com/docker/compose/releases/download/"\
+        "1.22.0/docker-compose-$(uname -s)-$(uname -m)" \
+        -o /usr/local/bin/docker-compose
+
+        sudo chmod +x /usr/local/bin/docker-compose
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Синтаксис compose файла</h2>
+        <script type="snippet" lang="yaml">
+            version: "2.1"
+            services:
+                serviceA:
+                    image: postgres:10
+                serviceB:
+                    image: askme
+                    volumes:
+                        - host_dir:container_dir
+                        - host_port:container_port
+        </script>
+        Формат файла - <b>YAML</b>
+    </div></section>
+
+    <section class="slide"><div>
+        <script type="snippet" lang="yaml">
+        version: "2.1"
+        services:
+          db:
+            image: postgres:10
+            restart: always
+            volumes: [ '.db_data:/var/lib/postgresql/data' ]
+            environment:
+              POSTGRES_DB: dev_db
+              POSTGRES_USER: dev_user
+              POSTGRES_PASSWORD: dev_pass
+          webapp:
+            depends_on: [ db ]
+            build:
+              context: .
+              dockerfile: Dockerfile
+            image: askme
+            volumes: [ '.:/app' ]
+            ports: [ '8000:8000' ]
+            environment:
+              DB_NAME: dev_db
+              DB_HOST: db
+              DB_USER: dev_user
+              DB_PASSWORD: dev_pass
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Основные команды</h2>
+        <script type="snippet" lang="bash">
+            docker-compose build   # пересобрать все образы
+            docker-compose create  # создать все контейнеры
+            docker-compose start   # запустить контейнеры
+            docker-compose stop    # остановить контейнеры
+            docker-compose rm      # удалить контейнеры
+            docker-compose logs    # посмотреть логи
+            docker-compose up      # build, create, start, logs -f
+
+            # часто можно указать конкретный контейнер
+            docker-compose restart webapp
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Запуск команд внутри контейнера</h2>
+        <script type="snippet" lang="bash">
+            docker-compose exec webapp \
+                python3 /app/manage.py migrate
+
+            docker-compose exec webapp \
+                python3 /app/manage.py test
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Makefile</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Makefile</h2>
+        <script type="snippet" lang="make">
+            up:
+                docker-compose up
+
+            test: up
+                docker-compose exec webapp python3 /app/manage.py test
+
+            migrate: up
+                docker-compose exec webapp python3 /app/manage.py migrate
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Использование Makefile</h2>
+        <script type="snippet" lang="make">
+            make migrate
+        </script>
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
