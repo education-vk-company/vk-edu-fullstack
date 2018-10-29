@@ -346,7 +346,7 @@
         <script type="snippet" lang="text">
         ├── app
         │   ├── app.py            # Flask приложение
-        │   ├── handlers.py       # Контроллеры
+        │   ├── views.py          # Контроллеры
         │   ├── db.py             # Утилиты для работы с СУБД
         │   ├── model.py          # Модели, конкретные запросы к СУБД
         │   └── config.py         # Настройки подключения
@@ -435,7 +435,7 @@
     <section class="slide"><div>
         <h2>И тогда в контроллере</h2>
         <script type="snippet" lang="python">
-            # app/handlers.py
+            # app/views.py
             from flask import request, jsonify
             import model
             from app import app
