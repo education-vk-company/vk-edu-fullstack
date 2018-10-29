@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Backend разработка</h1>
+        <p><a href="https://github.com/toshunster/">Антон Кухтичев</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2>Реализация API</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Теоретическая часть</h2>
+        <ul>
+            <li>Формат JSON;</li>
+            <li>Стандарт JSON-RPC;</li>
+            <li>Декораторы в Python;</li>
+            <li>Использование JSON-RPC в Flask;</li>
+            <li>Валидация параметров запросов, формы;</li>
+            <li>Обработка ошибок в Web-проектах;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Практическая часть</h2>
+        <ul>
+            <li>Работа с JSON в Python;</li>
+            <li>Проектирование API проекта;</li>
+            <li>Тестирование API проекта.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Application programming interface (API)</h2>
+        Описание способов (набор классов, процедур, функций, структур или констант), которыми одна компьютерная программа может взаимодействовать с другой программой.
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Виды совместимости приложений</h2>
+        <ul>
+            <li>обратная совместимость — более новый код способен читать данные, записанные более старым;</li>
+            <li>прямая совместимость — более старый код способен читать данные, записанные более новым.</li>
+        </ul>
+    </section>
+
+    <section class="slide"><div>
+        <h2>Форматы передачи данных</h2>
+        <ul>
+            <li>Текстовые форматы (JSON, XML, CSV);</li>
+            <li>Бинарный формат (Apache Thrift, Protocol Buffers);</li>
+        </ul>
+    </section>
+
+    <section class="slide shout"><div>
+        <h2>Формат JSON</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Формат JSON</h2>
+        JSON (англ. JavaScript Object Notation) — текстовый формат обмена данными, основанный на JavaScript.
+        <script type="snippet" lang="plain">
+            {
+                "firstName": "Иван",
+                "lastName": "Иванов",
+                "phoneNumbers": [
+                    "812 123-1234",
+                    "916 123-4567"
+                ]
+            }
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Формат JSON</h2>
+        JSON основан на двух структурах данных:
+        <ul>
+            <li>Коллекция пар ключ/значение. В разных языках, эта концепция реализована как объект, запись, структура, словарь, хэш, именованный список или ассоциативный массив;
+            <img width="90%" src="pictures/json_object.gif"/>
+            </li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Формат JSON</h2>
+        JSON основан на двух структурах данных:
+        <ul>
+            <li>Упорядоченный список значений. В большинстве языков это реализовано как массив, вектор, список или последовательность.
+            <img width="90%" src="pictures/json_array.gif" />
+            </li>
+        </ul>        
+    </div></section>
+
+    <section class="slide"><div>
+        <img width="90%" src="pictures/json_value.png" class="place"/>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Формат JSON</h2>
+        Преимущества:
+        <ul>
+            <li>Легко читается человеком;</li>
+            <li>Компактный;</li>
+            <li>Для работы с JSON есть множество библиотек;</li>
+            <li>Больше структурной информации в документе.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Формат JSON</h2>
+        <ul>
+            <li>JSON - это формат данных - он содержит только свойства, а не методы;</li>
+            <li>JSON требует двойных кавычек, которые будут использоваться вокруг строк и имен свойств;</li>
+            <li>Вы можете проверить JSON с помощью приложения, такого как jsonlint;</li>
+            <li>JSON может фактически принимать форму любого типа данных, который действителене для включения внутри JSON, а не только массивов или объектов.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Стандарт JSON-RPC</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Стандарт JSON-RPC</h2>
+        JSON-RPC (сокр. от англ. JavaScript Object Notation Remote Procedure Call — JSON-вызов удалённых процедур) — протокол удалённого вызова процедур, использующий JSON для кодирования сообщений.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Стандарт JSON-RPC</h2>
+        Формат входного запроса:
+        <ul>
+            <li>method — строка с именем вызываемого метода;</li>
+            <li>params — массив объектов, которые должны быть переданы методу, как параметры;</li>
+            <li>id — значение любого типа, которое используется для установки соответствия между запросом и ответом.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Стандарт JSON-RPC</h2>
+        Формат ответа:
+        <ul>
+            <li>result — данные, которые вернул метод. Если произошла ошибка во время выполнения метода, это свойство должно быть установлено в null;</li>
+            <li>error — код ошибки, если произошла ошибка во время выполнения метода, иначе null;</li>
+            <li>id — то же значение, что и в запросе, к которому относится данный ответ.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Стандарт JSON-RPC</h2>
+        Пример запроса:
+        <script type="snippet" lang="plain">
+            { "method": "echo", "params": ["Hello JSON-RPC"], "id": 1 }
+        </script>
+
+        Пример ответа:
+        <script type="snippet" lang="plain">
+            { "result": "Hello JSON-RPC", "error": null, "id": 1 }
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Декораторы в Python</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Декораторы в Python</h2>
+        Это функция, которая принимает функцию в качестве единственного аргумента и возвращает новую функцию, с дополнительными функциональными возможностями.
+        <script type="snippet" lang="python">
+            def my_decorator(function):
+                def wrapper(*args, **kargs):
+                    return result
+                return wrapper
+            
+            @my_decorator
+            def foo():
+                # тело функции
+                ...
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Параметризуемый декораторы в Python</h2>
+        Вызываем функцию с требуемыми параметрами, и она вернёт декоратор, который будет использован для декорирования следующей за ним функцией.
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Домашнее задание</h2>
+        <ul>
+            <li>Переработать API с использованием Flask-JSONRPC (3 балла);</li>
+            <li>Реализовать методы и тесты для (4 балла):</li>
+            <ul>
+                <li>отправка сообщения;</li>
+                <li>получение списка сообщений чата;</li>
+                <li>прочтение сообщение.</li>
+            </ul>
+            <li>Валидировать входные параметры API (3 балла).</li>
+        </ul>
+        <b>Срок сдачи:</b> следующее занятие.
+    </div></section>
+
+    <section class="slide"><div>
+        <center><h2>Спасибо за внимание!</h2></center>
+        <img src="pictures/volk.jpg" class="center">
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
