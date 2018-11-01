@@ -1,4 +1,4 @@
-## Домашние задание 5
+## Домашнее заданиее 5
 
 - Закрепить знания React.js
 	- Вспомнить, как мы разворачивали свое окружение для разработки [тут](https://github.com/frontend-track-mail-ru/frontend-track-lecture-samples)
@@ -9,3 +9,4 @@
 - Переписать компоненты на React
 - Восстановить стили для всех компонентов
 - Старые файлы больше не нужны, можно их удалить
+- [Скринкасты](https://drive.google.com/drive/folders/1UxkThha5TIUq4ySCgcOZMoLTsrxKJQD_?usp=sharing)

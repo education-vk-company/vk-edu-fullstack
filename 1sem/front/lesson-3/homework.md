@@ -1,4 +1,4 @@
-## Домашние задание 
+## Домашнее задание 3
 
 - Ознакомиться с документацией по ссылкам
    - [EventLoop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
