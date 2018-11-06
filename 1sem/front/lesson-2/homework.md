@@ -1,4 +1,4 @@
-## Домашние задание 
+## Домашнее задание 2
 
 - Ознакомиться с документацией по ссылкам
    - [Устройство браузера](https://html5rocks.appspot.com/en/tutorials/internals/howbrowserswork/) и [архитектура Chrome](https://developers.google.com/web/updates/2018/09/inside-browser-part1)
