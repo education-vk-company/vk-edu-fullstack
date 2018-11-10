@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Углубленная Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Углубленная Backend разработка</h1>
+        <p><a href="https://github.com/mialinx/">Дмитрий Смаль</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2>Развертывание Web приложений</h2>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Облачная инфраструктура</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <p>
+            <img style="width: 40%" src="pictures/aws_logo.png">
+            <img style="width: 40%; margin-left: 10%" src="pictures/gce_logo.png">
+            <img style="width: 40%" src="pictures/azure_logo.png">
+            <img style="width: 40%; margin-left: 10%" src="pictures/mcs_logo.png">
+        </p>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Mail.Ru Cloud Solutions</h2>
+        Адрес: <a href="https://mcs.mail.ru/">https://mcs.mail.ru/</a>
+        <br>
+        <br>
+        Запросить приглашение: <a href="mailro:mialinx@gmail.com">mialinx@gmail.com</a> с пометкой [TP]
+        <br>
+        <br>
+        Т.к. аккаунт "коммунальный", необходимо соблюдать правила именования:
+        <code>year-full_name-something</code>, <br>например <code>2018-smal-dmitry-vm</code>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Что нужно создать</h2>
+        <ul>
+            <li>Виртуальную машину (минимальные настройки)</li>
+            <li>Новый SSH ключ (сохранить *.pem файл себе)</li>
+            <li>Проверить наличие внешнего IP адреса</li>
+            <li>Экземпляр postgresql (с существующим ключом и минимальными настройками)</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>SSH доступ</h2>
+        У клиента - пара ключей (private и public)<br>
+        У сервера - только public<br>
+        Сервер пускает только тех пользователей, чьи public ключи он знает,
+        т.е. тех чьи ключи прописаны в <code>/home/username/.ssh/authorized_keys</code> на сервере.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>SSH доступ</h2>
+        <script type="snippet" lang="bash">
+            ## локально
+            mkdir ~/.ssh/mcs
+            mv ~/Downloads/2018-dmitry-smal-vm_id_rsa.pem ~/.ssh/mcs/id_rsa
+            chmod 0700 ~/.ssh/mcs
+            chmod 0600 ~/.ssh/mcs/id_rsa
+            ssh -i ~/.ssh/mcs/id_rsa ubuntu@95.163.249.245
+            
+            ## на виртуалке
+            apt update
+            apt install git nginx python3
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>DNS</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>DNS</h2>
+        <ul>
+            <li>Регистрируемся, например, на <a href="http://freedns.afraid.org">http://freedns.afraid.org</a></li>
+            <li>Создаем поддомен вида <code>full_name.chickenkiller.com</code></li>
+            <li>Добавляем <code>A</code> запись с <b>внешним</b> IP адресом вашей виртуалки</li>
+            <li>Ждем и проверям <code>host full_name.chickenkiller.com</code></li>
+        </ul>
+        Либо за 500-1000р делаем то же самое у платного регистратора: <a href="https://reg.ru/">reg.ru</a>, <a href="https://ru.godaddy.com">GoDaddy</a> и т.д.
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>HTTPS</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>HTTPS</h2>
+        <ul>
+            <li>Идем на <a href="https://letsencrypt.org/">https://letsencrypt.org</a> и читаем</li>
+            <li>Следуем инструкциям на <a href="https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx">https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx</a>
+                и устанавливаем на виртуалку <code>python-certbot-nginx</code></li>
+            <li>Запускаем nginx и проверяем доступность <code>http://full_name.chickenkiller.com/</code></li>
+            <li>После запуска <code>sudo certbot --nginx</code> отвечаем на вопросы, вводим доменное имя и получаем сертификат</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Deploy</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Простая схема развертывания</h2>
+        <img src="pictures/simple_deploy.png">
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Репозитории и артефакты</h2>
+        <ul>
+            <li>Через Файлы: FTP сервер и tar.gz архивы</li>
+            <li>Через Git: github.com и исходники</li>
+            <li>Через Пакеты: APT репозиторий и DEB пакеты</li>
+            <li>Через Docker: Docker registry и Docker образы</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Использование CI / CD</h2>
+        <img src="pictures/complex_deploy.png">
+    </div></section>
+
+    <section class="slide"><div>
+        <img style="width: 20%" src="pictures/teamcity_logo.png">
+        <img style="width: 40%" src="pictures/travis_logo.png">
+        <img style="width: 35%" src="pictures/circleci_logo.png">
+        <img style="width: 50%" src="pictures/bamboo_logo.png">
+        <img style="width: 20%; margin-left: 15%" src="pictures/github_logo.png">
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
