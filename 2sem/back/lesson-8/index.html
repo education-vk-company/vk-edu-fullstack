@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Углубленная Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Углубленная Backend разработка</h1>
+        <p><a href="https://github.com/toshunster/">Антон Кухтичев</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2 style="font-size: 340%">Оптимизация производительности</h2>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Теоретическая часть</h2>
+        <ul>
+            <li>Мониторинг потребления ресурсов;</li>
+            <li>Профилирование backend;</li>
+            <li>Приемы оптимизации: кеширование, денормализация, изменение архитектуры.</li>
+        </ul>
+    </div></section>
+
+    <!-- >section class="slide"><div>
+        <h2>Практическая часть</h2>
+        <ul>
+            <li>Добиться загрузки первой страницы за 500мс;</li>
+            <li>Добиться времени отклика всех API вызовов в 200мс.</li>
+        </ul>
+    </div></section-->
+
+    <section class="slide shout"><div>
+        <h2>Мониторинг потребления ресурсов</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>top</h2>
+        Консольная команда, которая выводит список работающих в системе процессов и информацию о них.
+        <ul>
+            <li><code>PID</code> — идентификатор процесса</li>
+            <li><code>USERNAME</code> — пользователь, от которого запущен процесс</li>
+            <li><code>SIZE</code> — размер процесса (данные, стек и т. д.) в килобайтах</li>
+            <li><code>RES</code> — текущее использование оперативной памяти</li>
+            <li><code>VIRT</code> — полный объем виртуальной памяти, которую занимает процесс</li>
+            <li><code>%CPU</code> — процент доступного времени процессора, которое использовала запущенная программа</li>
+            <li><code>%MEM</code> — процент использования оперативной памяти данным процессом</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>iotop</h2>
+        iotop -- утилита, выводящая данные по использованию жесткого диска.
+        
+        <script type="snippet" lang="bash">
+        # Выведим наиболее активные процессы.
+        iotop -o
+        # Собрать статистику за определённое время
+        iotop -o -a
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>iostat</h2>
+        Утилита, предназначенная для мониторинга использования дисковых разделов.
+        
+        <script type="snippet" lang="bash">
+        
+        iostat -d -t -p sda -x
+        </script>
+        <ul>
+            <li><code>-c</code> — вывести отчёт по CPU;</li>
+            <li><code>-d</code> — вывести отчёт по использования диска;</li>
+            <li><code>-t</code> — интервал, за который усредняются значения и вычисляются "средние" значения в секундах;</li>
+        </ul>
+        
+    </div></section>
+    
+    <section class="slide shout"><div>
+        <h2>Профилирование backend</h2>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Для чего нужно профилирование?</h2>
+        <ul>
+            <li>Позволяет найти “узкие места” в вашем коде;</li>
+            <li>Чем быстрее код, тем больше работы за единицу времени;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Для чего нужно профилирование?</h2>
+        <ul>
+            <li>Основные способы - замеры</li>
+            <ul>
+                <li>CPU</li>
+                <li>Память</li>
+                <li>Частота/продолжительность вызовов функций</li>
+            </ul>
+            <li>Методы</li>
+            <ul>
+                <li>Статистический метод (сэмплирование)</li>
+                <li>Инструментирование</li>
+            </ul>
+        </ul>
+    </div></section>
+    
+
+    <section class="slide"><div>
+        <h2>Python profiler</h2>
+        <ul>    
+            <li>cProfile — относительно новый (с версии 2.5) модуль, написанный на C и оттого быстрый;</li>
+            <li>profile — нативная реализация профайлера (написан на чистом питоне), медленный, и поэтому не рекомендуется к использованию;</li>
+            <li>hotshot — экспериментальный модуль на си, очень быстрый, но больше не поддерживается и в любой момент может быть удалён из стандартных библиотек;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Flame graph</h2>
+        <ul>
+            <li>Метод визуализации собранных фреймов стека;</li>
+            <li>Введены в обиход Бренданом Греггом (Brendan Gregg);</li>
+            <li>Помогают понять общую картину выполнения приложения;</li>
+            <li>Работает с разными формата результатов (perf, DTrace и т.д.).</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Flame graph. Установка</h2>
+        <script type="snippet" lang="bash">
+            # Установить библиотеку Python flamegraph
+            pip3 install flamegraph
+            # Получить логи профилирования для .
+            python3 -m flamegraph -o perf.log your_script.py <args>
+
+            # Получить svg.
+            ./flamegraph.pl --title "MyScript CPU" perf.log > perf.svg
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Оптимизация ORM</h2>
+        <ul>
+            <li>select_related();</li>
+            <li>prefetch_related();</li>
+            <li>values;</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>select_related()</h2>
+        Возвращает QuerySet, который автоматически включает в выборку данные связанных объектов при выполнении запроса.
+        <ul>
+            <plus>Повышает производительность;</plus>
+            <minus>Увеличивает(иногда значительно) объем получаемых данных;</minus>
+            <li>Можно указывать глубину через параметр depth;</li>
+            <li>Можно указывать название полей;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>select_related(). Примерчик</h2>
+        <script type="snippet" lang="python">
+            class City(models.Model):
+                # ...
+                pass
+
+            class Person(models.Model):
+                # ...
+                hometown = models.ForeignKey(City)
+
+            class Book(models.Model):
+                # ...
+                author = models.ForeignKey(Person)
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>select_related(). Примерчик</h2>
+        <script type="snippet" lang="python">
+            b = Book.objects.select_related().get(id=4)
+            p = b.author         # Нет обращения к БД.
+            c = p.hometown       # Нет обращения к БД.
+            
+            b = Book.objects.get(id=4)
+            p = b.author         # Обращение к БД.
+            c = p.hometown       # Обращение к БД.
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>prefetch_related()</h2>
+        Возвращает QuerySet, который получает “за один подход” связанные объекты для каждого из указанных параметра поиска.
+        <ul>
+            <plus>Повышает производительность;</plus>
+            <minus>Увеличивает(иногда значительно) объем получаемых данных;</minus>
+            <li>Можно указывать глубину через параметр depth;</li>
+            <li>Можно указывать название полей;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>prefetch_related(). Примерчик</h2>
+        <script type="snippet" lang="python">
+            class Topping(models.Model):
+                name = models.CharField(max_length=30)
+            
+            class Pizza(models.Model):
+                name = models.CharField(max_length=50)
+                toppings = models.ManyToManyField(Topping)
+
+                def __unicode__(self):
+                    return u"%s (%s)" % (self.name, u", ".join([topping.name
+                                                    for topping in self.toppings.all()]))
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>prefetch_related(). Примерчик</h2>
+        <script type="snippet" lang="python">
+            # Будет выполнен запрос к таблице 
+            # Toppings для каждого объекта Pizza.
+            Pizza.objects.all()
+
+            # Все соответствующие начинки(toppings) 
+            # будут получены одним запросом.
+            Pizza.objects.all().prefetch_related('toppings').
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>values()</h2>
+        Возвращает ValuesQuerySet — подкласс QuerySet, который возвращает словари с результатом вместо объектов моделей.
+        <ul>
+            <li>Помогает разграничивать получаемые данные (не грузить тяжёлые объекты без необходимости);</li>
+            <li>Каждый словарь представляет объект, ключи которого соответствуют полям модели;</li>
+            <li>Принимает дополнительные позиционные аргументы, *fields, которые определяют какие поля будут получены через SELECT;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>values(). Примерчик</h2>
+        <script type="snippet" lang="python">
+            >>> Blog.objects.values()
+            [{'id': 1, 'name': 'Beatles Blog', 'tagline': 
+                        'All the latest Beatles news.'}],
+            >>> Blog.objects.values('id', 'name')
+            [{'id': 1, 'name': 'Beatles Blog'}]
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Кеширование</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Виды кеширования</h2>
+        Кэширование означает сохранение результатов дорогостоящего вычисления, чтобы избежать его повторного вычисления в следующий раз.
+        <ul>
+            <li>Memcached;</li>
+            <li>Кэширование в базу данных;</li>
+            <li>Кэширование на файловую систему;</li>
+            <li>Кэширование в оперативной памяти;</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Memcached</h2>
+        <ul>
+            <li>Все данные хранятся прямо в оперативной памяти;</li>
+            <li>Работает как демон и захватывает определённый объём оперативной памяти;</li>
+            <li>Нет никакой дополнительной нагрузки на базу данных или файловую систему.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка Memcached</h2>
+        <script type="snippet" lang="bash">
+            # Установить библиотеку Python 
+            # для работы с memcached
+            pip3 install python-memcached
+            # Установить пакет memcached.
+            sudo apt-get install memcached
+
+            # Запустить демона memcached
+            # По умолчанию порт 11211
+            # /etc/memcached.conf
+            systemctl start memcached
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Настройка Memcached в Django</h2>
+        <script type="snippet" lang="bash">
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': [
+                        '172.19.26.240:11211',
+                        '172.19.26.242:11211',
+                    ]
+                }
+            }
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Кэширование в базу данных</h2>
+        <script type="snippet" lang="bash">
+            # Создать таблицу в БД для кэша
+            python manage.py createcachetable [cache_table_name]
+            # Заполнить секцию CACHES в settings.py
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+                    'LOCATION': 'my_cache_table',
+                }
+            }
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Кэширование на файловую систему</h2>
+        <script type="snippet" lang="bash">
+            # Заполнить секцию CACHES в settings.py
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+                    'LOCATION': '/var/tmp/django_cache',
+                }
+            }
+        </script>
+        <ul>
+            <li>Путь до каталога должен быть абсолютным;</li>
+            <li>удостовериться, что указанный каталог существует и доступен для чтения и записи для пользователя, от которого работает ваш веб сервер.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Кэширование в оперативной памяти</h2>
+        <script type="snippet" lang="bash">
+            # Заполнить секцию CACHES в settings.py
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                    'LOCATION': 'unique-snowflake'
+                }
+            }
+        </script>
+        <ul>
+            <li>Каждый процесс будет работать со своим собственным экземпляром кэша.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide shout"><div>
+        <h2>Денормализация</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Когда нужна денормализация?</h2>
+        В запросах к полностью нормализованной базе нередко приходится соединять до десятка, а то и больше, таблиц. А каждое соединение — операция весьма ресурсоемкая.
+        <ul>
+            <li>Денормализация путем сокращения количества таблиц.;</li>
+            <li>Денормализация путём ввода дополнительного поля в одну из таблиц.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Когда нужна денормализация?</h2>
+        В запросах к полностью нормализованной базе нередко приходится соединять до десятка, а то и больше, таблиц. А каждое соединение — операция весьма ресурсоемкая.
+        <ul>
+            <li>Денормализация путем сокращения количества таблиц.;</li>
+            <li>Денормализация путём ввода дополнительного поля в одну из таблиц.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Домашнее задание</h2>
+        <ul>
+            <li>Использовав профайлер, сделать замеры и определить самые ресурсоёмкие методы (3 балла)</li>
+            <li>Настроить memcached (3 балла)</li>
+            <li>Добиться загрузки первой страницы за 500мс (3 балла);</li>
+            <li>Добиться времени отклика всех API вызовов в 200мс (2 балла)</li>
+        </ul>
+        <b>Срок сдачи:</b> следующее занятие.
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
