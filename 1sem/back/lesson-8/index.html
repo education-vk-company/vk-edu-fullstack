@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Backend разработка</h1>
+        <p><a href="mailto:a.elizarova@corp.mail.ru">Алена Елизарова</a></p>
+        <p><a href="mailto:a.kukhtichev@corp.mail.ru">Антон Кухтичев</a></p>
+        <p><a href="mailto:mialinx@gmail.com">Дмитрий Смаль</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2>Работа с файлами</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Теоретическая часть</h2>
+        <ul>
+            <li>Загрузка файлов из браузера</li>
+            <li>MIME типы</li>
+            <li>Хранение файлов в облаке S3</li>
+            <li>Проксирование, кеширование и контроль доступа к файлам в nginx</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Практическая часть</h2>
+        <ul>
+            <li>Загрузка и сохранение файлов  в S3</li>
+            <li>Раздача загруженных файлов и ограничение доступа</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Загрузка файлов из браузера</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Файлы</h2>
+        <ul>
+            <li>Файлы прописанные в коде и в шаблонах, назовем их STATIC файлы (то, что добавляет разработчик);</li>
+            <li>Файлы, который используются в коде, но известны только в процессе работы кода, назовем их MEDIA файлы (то, что добавляет пользователь);</li>
+            <li>Пользователь загружает файл на страничке, frontend берёт содержимое, кодирует при помощи base64 и отправляет на бекэнд. Наше дело --- раскодировать и сохранить.</li>
+        </ul>
+    </div></section>
+
+
+    <section class="slide shout"><div>
+            <h2>MIME типы</h2>
+        </div></section>
+        
+        <section class="slide"><div>
+            <h2>MIME типы</h2>
+            MIME (Multipurpose Internet Mail Extension, Многоцелевые расширения почты Интернета) — спецификация для передачи по сети файлов различного типа: изображений, музыки, текстов, видео, архивов и др.
+        </div></section>
+    
+        <section class="slide"><div>
+            <h2>Основные MIME типы</h2>
+            <ul>
+                <li>application (внутренний формат прикладной программы). Примеры: json, xml, js, pdf.</li>
+                <li>image (изображения). Примеры: jpeg, png, webp, gif.</li>
+                <li>text (текст). Примеры: csv, markdown, plain, html, xml.</li>
+                <li>multipart. Примеры: form-data, signed, encrypted. </li>
+                <li>audio (аудио). Примеры: mpeg, aac, ogg.</li>
+            </ul>
+        </div></section>
+    
+        <section class="slide"><div>
+            <h2>Для чего нужно?</h2>
+            <ul>
+                <li>Загружать/отображать файлы определенного типа (вкладки фото/видео/файлы в ВК, Телеграме и т.д.).</li>
+            </ul>
+
+            <script type="snippet" lang="bash">
+                # Установить либу для определения mime типа.
+                pip3 install python-magic
+            </script>
+
+            <script type="snippet" lang="python">
+                def check_in_memory_mime(in_memory_file):
+                    mime = magic.from_buffer(in_memory_file.read(), mime=True)
+                    return mime
+            </script>
+        </div></section>
+    
+
+    <section class="slide shout"><div>
+        <h2>Хранение файлов на локальном хранилище и в облаке S3</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Облачное хранилище Mail.Ru S3</h2>
+        S3 (Simple Storage Service) — онлайновая веб-служба, предоставляющая возможность для хранения и получения любого объёма данных, в любое время из любой точки сети, так называемый файловый хостинг.
+        S3 API — набор команд, которые «понимает» хранилище и выполняет в ответ некие действия (получение/запись файла).
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Достоинства применения S3</h2>
+        <ul>
+            <li>Высокая масштабируемость;</li>
+            <li>Надёжность;</li>
+            <li>Высокая скорость;</li>
+            <li>SSL-соединение с хранилищем;</li>
+            <li>Гарантирована на уровне 500 запросов в секунду;</li>
+            <li>Недорогая инфраструктура хранения данных.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Виды хранилища Mail.Ru Cloud Solutions</h2>
+        <ul>
+            <li>Icebox (для хранения редко используемых данных: архивов, резервных копий, журналов);</li>
+            <li>Hotbox (для хранения часто используемых данных);</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Flask и Mail.Ru Cloud Solutions S3</h2>
+        Boto это набор средств разработки (SDK) от Amazon Web Services (AWS) для языка Python, позволяющая разработчикам писать программы для сервисов S3 или EC2 (Elastic Compute Cloud).
+        <ul>
+            <li>Прислать на почту a.kukhtichev@corp.mail.ru запрос для получения доступа с пометкой в теме [ТТ];</li>
+            <li>Дождаться ответного письма с ссылкой-приглашением на <a href="https://mcs.mail.ru/">Mail.Ru Cloud Solutions</a>;</li>
+            <li>Подтвердить адрес электронной почты;</li>
+            <li>Создать аккаунт для Cloud Storage (Облачное хранилище) и получить Access Key ID, Secret Key;</li>
+            <li>Создать бакет.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Как правильно назвать бакет?</h2>
+        Адрес: <a href="https://mcs.mail.ru/">https://mcs.mail.ru/</a>
+        <ul>
+            <li>Т.к. аккаунт "коммунальный", необходимо соблюдать правила именования:
+                <code>year-full_name-something</code>, <br>например <code>2018-anton-kukhtichev-bucket</code>;
+            </li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Boto3</h2>
+        Используем boto3 библиотеку
+        <script type="snippet" lang="bash">
+            # Установить библиотеку для работы с S3.
+            pip3 install boto3
+        </script>
+
+        <script type="snippet" lang="python">
+            import boto3
+            session = boto3.session.Session()
+            s3_client = session.client( ... )
+        </script>
+       
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Boto3</h2>
+
+        Аргументы session.client( ... ):
+        <ul>
+            <li>service_name='s3'</li>
+            <li>endpoint_url='http://hb.bizmrg.com'</li>
+            <li>aws_access_key_id='&lt;your access key id&gt;';</li>
+            <li>aws_secret_access_key='&lt;your secret key&gt;'</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Put/Get объект из S3</h2>
+
+        Успешно инициализировали s3_client.
+        <script type="snippet" lang="python">
+            s3_client.put_object( Bucket='<bucket name>', Key='<key>', Body=<content> )
+        </script>
+        <ul>
+            <li>Одинаковые ключи по умолчанию перезаписываются;</li>
+            <li><b>Решение 1:</b> ключ --- хэш от названия файла и аттрибутов пользователя;</li>
+            <li><b>Решение 2:</b> в Key можно указывать путь, например: Key='dir1/key.txt';</li>
+            <li>В Body можно передать BufferedReader или содержимое файла (наш вариант).</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Проксирование, кеширование и контроль доступа к файлам в Nginx</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Nginx</h2>
+        <ul>
+            <li>Веб-сервер, работающий на Unix-подобных операционных системах;</li>
+            <li>Nginx может работать при очень больших нагрузках;</li>
+            <li>Игорь Сысоев начал разработку в 2002 году;</li>
+            <li>Осенью 2004 года вышел первый публично доступный релиз.</li>
+        </ul>
+        <script type="snippet" lang="bash">
+            # установить nginx
+            sudo apt install nginx
+            # редактируем конфиг
+            sudo vim /etc/nginx/conf.d/default.conf
+        </script>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Проксирование в Nginx</h2>
+        <script type="snippet" lang="plain">
+        location / {
+            ...
+            proxy_pass http://127.0.0.1:5000/;
+            ...
+        }
+        </script>
+        
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Кеширование в Nginx</h2>
+        <ul>
+            <li>Не генерировать постоянно одни и те же скрипты;</li>
+            <li>Приложение генерирует страницу один раз, и результат сохраняется в память;</li>
+            <li>Периодически (time to live --- ttl) сохраненная версия будет удаляться и генерироваться новая;</li>
+            <li>Ускорение сайта и экономию ресурсов;</li>
+            <li>Ключи в оперативной памяти, кеш хранится на жёстком диске.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Кеширование в Nginx</h2>
+        <script type="snippet" lang="plain">
+        http {
+            ...
+            proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=all:32m max_size=1g;
+            ...
+        }
+        </script>
+        <script type="snippet" lang="bash">
+        mkdir /var/cache/nginx
+        chown nginx:nginx /var/cache/nginx/
+        </script>
+        
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Кеширование в Nginx</h2>
+        
+        <script type="snippet" lang="plain">
+        server {
+            ...
+            proxy_cache all;
+            # Кешировать указанные коды ответов 5 минут
+            proxy_cache_valid 200 301 302 304 10m;
+            # Кешировать ошибки 1 минуту
+            proxy_cache_valid 404 502 503 1m;
+        }
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Контроль доступа файлов Nginx</h2>
+        <ul>
+            <li>Пользователь каким-то образом получил урл или название файла;</li>
+            <li>Все запросы на скачивание файлов передаются скрипту, который решает, как поступить
+                <ul>
+                    <li>отправить пользователю какой-либо файл;</li>
+                    <li>показать стриницу access denied.</li>
+                </ul></li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Контроль доступа файлов Nginx. Шаг 1</h2>
+        1) Новый location с internal;
+        <script type="snippet" lang="plain">
+            location /s3/ {
+                ...
+                internal;
+                ...
+            }
+            </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Контроль доступа файлов Nginx. Шаг 2</h2>
+        <ul>
+            <li>Создание метода, отвечающего за проверку доступа;</li>
+            <li>Если пользователь заслуживает доступа к этому файлу, то проставить заголовок X-Accel-Redirect</li>
+        </ul>
+        
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Контроль доступа файлов Nginx. Шаг 3</h2>
+        Сгенерировать подпись и ключ для доступа в s3 хранилище на nginx.
+        <script type="snippet" lang="plain">
+            location /protected/ {
+                set $s3_bucket 'upload_file';
+                set $aws_access_key '<access key>';
+                set $aws_secret_key '<secret key>';
+                set $url_full         "$1";
+                set $string_to_sign   "$request_method\n\n\n\nx-amz-date:${now}\n/$bucket/$url_full";
+                set_hmac_sha1          $aws_signature $aws_secret $string_to_sign;
+                set_encode_base64      $aws_signature $aws_signature;
+        
+                proxy_http_version     1.1;
+                proxy_set_header       Connection "";
+                proxy_set_header       authorization "AWS $aws_access:$aws_signature";
+                proxy_set_header       Host "https://${s3_bucket}.hb.bizmrg.com";
+            </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Контроль доступа файлов Nginx. Шаг 3</h2>
+        На самом деле можно все подписи и ключи сгенерировать во вьюшке.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Материалы</h2>
+        <ul>
+            <li>Облачная платформа: <a href="https://mcs.mail.ru/app/services/storage/">Mail.Ru Cloud Soultions</a></li>
+            <li>Nginx: <a href="https://nginx.org/ru/">Официальный сайт</a></li>
+            <li>Как авторизоваться MRCS: <a href="https://help.mail.ru/hotbox-help/advanced/auth/signature">Создание подписей для запросов REST и их аутентификация</a></li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Домашнее задание</h2>
+        <ul>
+            <li>Реализовать метод API для загрузки файла (использовать base64) (3 балла)</li>
+            <li>Использовать для хранения файла облачное S3 хранилище (3 балла)</li>
+            <li>Создать localtion в Nginx для раздачи загруженных файлов (3 балла)</li>
+            <li>Реализовать обработчик в приложении для проверки прав доступа к файлу (2 балла)</li>
+        </ul>
+        <b>Срок сдачи:</b> следующее занятие.
+    </div></section>
+
+    <section class="slide"><div>
+        <center><h2>Спасибо за внимание!</h2></center>
+        <img src="pictures/volk.jpg" class="center">
+    </div></section>
+    
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+</body>
+</html>
