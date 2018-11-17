@@ -6,6 +6,7 @@
    - Объекты [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
    - [Geolocation API](https://developer.mozilla.org/ru/docs/Web/API/Geolocation/Using_geolocation)
    - [File API](https://developer.mozilla.org/ru/docs/web/api/file)
+- Изучить наработки из https://github.com/zipp3r/courses/tree/lesson-3
 - Добавить на страницу список сообщений, отображающий сообщения пользователя и его собеседника
    - Сообщения пользователя выделены цветом и выравниваются по правому крую
    - Стилизовать сообщения в соответствии с макетом

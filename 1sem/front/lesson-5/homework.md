@@ -1,7 +1,7 @@
 ## Домашнее заданиее 5
 
 - Закрепить знания React.js
-	- Вспомнить, как мы разворачивали свое окружение для разработки [тут](https://github.com/frontend-track-mail-ru/frontend-track-lecture-samples)
+	- Вспомнить, как мы разворачивали свое окружение для разработки [тут](https://github.com/frontend-track-mail-ru/frontend-track-lecture-samples) (но не использовать это при выполнении ДЗ, мы будем использовать Create React App для скорости)
 	- Пройти [Tutorial](https://reactjs.org/tutorial/tutorial.html)
 	- Изучить [Docs](https://reactjs.org/docs/hello-world.html)
 - Изучить [Create React App](https://github.com/facebook/create-react-app)
