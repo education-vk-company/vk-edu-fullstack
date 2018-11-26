@@ -1,4 +1,4 @@
-## Домашнее заданиее 6
+## Домашнее задание 6
 
 - Закрепить знания по [React-router](https://reacttraining.com/react-router/web/guides/quick-start)
 - Подключить `react-router` к проекту
