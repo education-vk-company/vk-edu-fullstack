@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Углубленная Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Углубленная Backend разработка</h1>
+        <p><a href="https://github.com/toshunster/">Антон Кухтичев</a></p>
+    </header>
+
+    <section class="slide"><div>
+        <h2>О преподавателях</h2>
+        <table class="preps">
+            <tr>
+                <td>
+                    <img src="pictures/alena.jpg"><br>
+                    <h4>Алена Елизарова</h4><br>
+                    <small>a.elizarova@corp.mail.ru</small>
+                </td>
+                <td>
+                    <img src="pictures/anton.jpg"><br>
+                    <h4>Антон Кухтичев</h4><br>
+                    <small>a.kukhtichev@corp.mail.ru</small>
+                </td>
+            </tr>
+        </table>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Углублённая Backend разработка. Что готово к этому моменту</h2>
+
+        <ul>
+            <li>Flask проект мессенджера;</li>
+            <li>Готовая база данных;</li>
+            <li>Покрытие проекта юнит тестами;</li>
+            <li>Разработали API;</li>
+            <li>Сделали авторизацию;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Что нас ждёт. Структура</h2>
+
+        <ul>
+            <li>11 смешанных занятий;</li>
+            <li>11 домашних заданий;</li>
+            <li>110 максимальных балла;</li>
+            <li>50 баллов -- проходной балл;</li>
+            <li>1 экзамен;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Что нас ждёт. Темы</h2>
+        <ul>
+            <li>Измерение производительности;</li>
+            <li>Углублённое тестирование;</li>
+            <li>Будем знать, что такое ORM, шардинг, кеширование и прочие магические штучки;</li>
+            <li>Развернём приложение в Интернет;</li>
+            <li>Подключим поисковый движок;</li>
+            <li>Разработаем микросервис и интегрируем его;</li>
+            <li>Make app secure again.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2 style="font-size: 340%">Оптимизация производительности</h2>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Теоретическая часть</h2>
+        <ul>
+            <li>Мониторинг потребления ресурсов;</li>
+            <li>Профилирование backend;</li>
+            <li>Приёмы оптимизации: кеширование, денормализация.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Мониторинг потребления ресурсов</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>top</h2>
+        Консольная команда, которая выводит список работающих в системе процессов и информацию о них.
+        <ul>
+            <li><code>PID</code> — идентификатор процесса</li>
+            <li><code>USERNAME</code> — пользователь, от которого запущен процесс</li>
+            <li><code>SIZE</code> — размер процесса (данные, стек и т. д.) в килобайтах</li>
+            <li><code>RES</code> — текущее использование оперативной памяти</li>
+            <li><code>VIRT</code> — полный объем виртуальной памяти, которую занимает процесс</li>
+            <li><code>%CPU</code> — процент доступного времени процессора, которое использовала запущенная программа</li>
+            <li><code>%MEM</code> — процент использования оперативной памяти данным процессом</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>iotop</h2>
+        iotop -- утилита, выводящая данные по использованию жесткого диска.
+        
+        <script type="snippet" lang="bash">
+        # Выведим наиболее активные процессы.
+        iotop -o
+        # Собрать статистику за определённое время
+        iotop -o -a
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>iostat</h2>
+        Утилита, предназначенная для мониторинга использования дисковых разделов.
+        
+        <script type="snippet" lang="bash">
+        
+        iostat -d -t -p sda -x
+        </script>
+        <ul>
+            <li><code>-c</code> — вывести отчёт по CPU;</li>
+            <li><code>-d</code> — вывести отчёт по использования диска;</li>
+            <li><code>-t</code> — интервал, за который усредняются значения и вычисляются "средние" значения в секундах;</li>
+        </ul>
+        
+    </div></section>
+    
+    <section class="slide shout"><div>
+        <h2>Профилирование backend</h2>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Для чего нужно профилирование?</h2>
+        <ul>
+            <li>Позволяет найти “узкие места” в вашем коде;</li>
+            <li>Чем быстрее код, тем больше работы за единицу времени;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Для чего нужно профилирование?</h2>
+        <ul>
+            <li>Основные способы - замеры</li>
+            <ul>
+                <li>CPU</li>
+                <li>Память</li>
+                <li>Частота/продолжительность вызовов функций</li>
+            </ul>
+            <li>Методы</li>
+            <ul>
+                <li>Статистический метод (сэмплирование)</li>
+                <li>Инструментирование</li>
+            </ul>
+        </ul>
+    </div></section>
+    
+
+    <section class="slide"><div>
+        <h2>Python profiler</h2>
+        <ul>    
+            <li>cProfile — относительно новый (с версии 2.5) модуль, написанный на C и оттого быстрый;</li>
+            <li>profile — нативная реализация профайлера (написан на чистом питоне), медленный, и поэтому не рекомендуется к использованию;</li>
+            <li>hotshot — экспериментальный модуль на си, очень быстрый, но больше не поддерживается и в любой момент может быть удалён из стандартных библиотек;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Flame graph</h2>
+        <ul>
+            <li>Метод визуализации собранных фреймов стека;</li>
+            <li>Введены в обиход Бренданом Греггом (Brendan Gregg);</li>
+            <li>Помогают понять общую картину выполнения приложения;</li>
+            <li>Работает с разными формата результатов (perf, DTrace и т.д.).</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Flame graph. Установка</h2>
+        <script type="snippet" lang="bash">
+            # Установить библиотеку Python flamegraph
+            pip3 install flamegraph
+            # Получить логи профилирования для .
+            python3 -m flamegraph -o perf.log your_script.py <args>
+
+            # Получить svg.
+            ./flamegraph.pl --title "MyScript CPU" perf.log > perf.svg
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Кеширование</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Виды кеширования</h2>
+        Кэширование означает сохранение результатов дорогостоящего вычисления, чтобы избежать его повторного вычисления в следующий раз.
+        <ul>
+            <li>Memcached;</li>
+            <li>Кэширование в базу данных;</li>
+            <li>Кэширование на файловую систему;</li>
+            <li>Кэширование в оперативной памяти;</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Memcached</h2>
+        <ul>
+            <li>Все данные хранятся прямо в оперативной памяти;</li>
+            <li>Работает как демон и захватывает определённый объём оперативной памяти;</li>
+            <li>Нет никакой дополнительной нагрузки на базу данных или файловую систему.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Установка Memcached</h2>
+        <script type="snippet" lang="bash">
+            # Установить библиотеку Python 
+            # для работы с memcached
+            pip3 install python-memcached
+            # Установить пакет memcached.
+            sudo apt-get install memcached
+
+            # Запустить демона memcached
+            # По умолчанию порт 11211
+            # /etc/memcached.conf
+            systemctl start memcached
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Настройка Memcached в Flask</h2>
+        <script type="snippet" lang="bash">
+            from werkzeug.contrib.cache import MemcachedCache
+            cache = MemcachedCache(['127.0.0.1:11211'])
+            ...
+            def get_my_item():
+            rv = cache.get('my-item')
+            if rv is None:
+                rv = calculate_value()
+                cache.set('my-item', rv, timeout=5 * 60)
+            return rv
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Настройка кэша в Flask</h2>
+        <script type="snippet" lang="bash">
+            $ pip install Flask-Caching
+        </script>
+
+        <script type="snippet" lang="bash"></script>
+            from werkzeug.contrib.cache import MemcachedCache
+            cache = MemcachedCache(['127.0.0.1:11211'])
+            ...
+            def get_my_item():
+            rv = cache.get('my-item')
+            if rv is None:
+                rv = calculate_value()
+                cache.set('my-item', rv, timeout=5 * 60)
+            return rv
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Кэширование в базу данных</h2>
+        <script type="snippet" lang="bash">
+            from flask import Flask
+            from flask_caching import Cache
+            
+            app = Flask(__name__)
+            # Check Configuring Flask-Caching section for more details
+            cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>CACHE_TYPE</h2>
+        <ul>
+            <li>null: NullCache (по умолчанию). Ничего не кэширует;</li>
+            <li>simple: SimpleCache. Использует питоновский dict, не потокобезопасный;</li>
+            <li>memcached: MemcachedCache (pylibmc or memcache required);</li>
+            <li>gaememcached: GAEMemcachedCache;</li>
+            
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>CACHE_TYPE</h2>
+        <ul>
+            <li>redis: RedisCache (требует Werkzeug 0.7). Кэш на основе Redis (key-value хранилище);</li>
+            <li>filesystem: FileSystemCache. Кэширование на файловую систему;
+                <ul>
+                    <li>Путь до каталога должен быть абсолютным;</li>
+                    <li>удостовериться, что указанный каталог существует и доступен для чтения и записи для пользователя, от которого работает ваш веб сервер.</li>
+                </ul>
+            </li>
+            <li>saslmemcached: SASLMemcachedCache (требует pylibmc). По сути тоже самое, что и memcached.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide shout"><div>
+        <h2>Денормализация</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Когда нужна денормализация?</h2>
+        В запросах к полностью нормализованной базе нередко приходится соединять до десятка, а то и больше, таблиц. А каждое соединение — операция весьма ресурсоемкая.
+        <ul>
+            <li>Денормализация путем сокращения количества таблиц;</li>
+            <li>Денормализация путём ввода дополнительного поля в одну из таблиц.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Домашнее задание</h2>
+        <ul>
+            <li>Наполнить базу искусственными синтетическими данными и произвести нагрузку (3 балла);</li>
+            <li>Использовав профайлер, сделать замеры и определить самые ресурсоёмкие методы (3 балла)</li>
+            <li>Поднять memcached демон, использовать в методах из п.2 кэш (3 балла);</li>
+        </ul>
+        <b>Срок сдачи:</b> следующее занятие.
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
