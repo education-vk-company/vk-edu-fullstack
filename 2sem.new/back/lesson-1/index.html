@@ -51,8 +51,8 @@
         <ul>
             <li>11 смешанных занятий;</li>
             <li>11 домашних заданий;</li>
-            <li>110 максимальных балла;</li>
-            <li>50 баллов -- проходной балл;</li>
+            <li>100 максимальных балла;</li>
+            <li>40 баллов -- проходной балл;</li>
             <li>1 экзамен;</li>
         </ul>
     </div></section>
@@ -232,36 +232,21 @@
     </div></section>
 
     <section class="slide"><div>
-        <h2>Настройка Memcached в Flask</h2>
-        <script type="snippet" lang="bash">
-            from werkzeug.contrib.cache import MemcachedCache
-            cache = MemcachedCache(['127.0.0.1:11211'])
-            ...
-            def get_my_item():
-            rv = cache.get('my-item')
-            if rv is None:
-                rv = calculate_value()
-                cache.set('my-item', rv, timeout=5 * 60)
-            return rv
-        </script>
-    </div></section>
-
-    <section class="slide"><div>
         <h2>Настройка кэша в Flask</h2>
         <script type="snippet" lang="bash">
             $ pip install Flask-Caching
         </script>
 
-        <script type="snippet" lang="bash"></script>
-            from werkzeug.contrib.cache import MemcachedCache
-            cache = MemcachedCache(['127.0.0.1:11211'])
-            ...
-            def get_my_item():
-            rv = cache.get('my-item')
-            if rv is None:
-                rv = calculate_value()
-                cache.set('my-item', rv, timeout=5 * 60)
-            return rv
+        <script type="snippet" lang="bash">
+from werkzeug.contrib.cache import MemcachedCache
+cache = MemcachedCache(['127.0.0.1:11211'])
+...
+def get_my_item():
+    rv = cache.get('my-item')
+    if rv is None:
+        rv = calculate_value()
+        cache.set('my-item', rv, timeout=5 * 60)
+    return rv
         </script>
     </div></section>
 
@@ -318,9 +303,9 @@
     <section class="slide"><div>
         <h2>Домашнее задание</h2>
         <ul>
-            <li>Наполнить базу искусственными синтетическими данными и произвести нагрузку (3 балла);</li>
-            <li>Использовав профайлер, сделать замеры и определить самые ресурсоёмкие методы (3 балла)</li>
-            <li>Поднять memcached демон, использовать в методах из п.2 кэш (3 балла);</li>
+            <li>Использовать memcached (4 балла)</li>
+            <li>Использование профайлера (4 балла);</li>
+            <li>Наполнить базу искусственными синтетическими данными и произвести нагрузку (доп. 2 балла);</li>
         </ul>
         <b>Срок сдачи:</b> следующее занятие.
     </div></section>
