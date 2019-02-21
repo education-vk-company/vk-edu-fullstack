@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Углубленная Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Углубленная Backend разработка</h1>
+        <p><a href="https://github.com/mialinx/">Дмитрий Смаль</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2>Безопасность Web приложений</h2>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Same Origin Policy</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Same Origin Policy</h2>
+        <p>Две страницы принадлежат одному Origin, если у них совпадают протокол, домен и порт. Доступ из одного Origin в другой - запрещен.</p>
+        <ul>
+            <li>Доступ к Cookie</li>
+            <li>Доступ к LocalStorage</li>
+            <li>Доступ к объекта DOM, вызов JavaSript</li>
+            <li>Выполнение AJAX запросов (*)</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>SOP - DOM</h2>
+        <script type="snippet" lang="html">
+            <html>
+                <body>
+                    <iframe id="tgt" src="https://another-site.ru/">
+                    </iframe>
+                </body>
+                <script>
+                    $('#tgt').on('load', function() {
+                        var innerDoc = $('#tgt')[0].contentDocument;
+                        var cookie = innerDoc.cookie;
+                        //...
+                    })
+                <&#8203;/script>
+            </html>
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Cross Origin Request</h2>
+        <ul>
+            <li><code><&#8203;img src="https://any-site.ru/logout"/></code></li>
+            <li><code><&#8203;link href="https://any-site.ru/logout"/></code></li>
+            <li><code><&#8203;script src="https://any-site.ru/logout"><&#8203;/script></code></li>
+            <li><code><&#8203;form action="https://any-site.ru/"><&#8203;/form></code></li>
+            <li><code>$.ajax({"url":"https://any-site.ru/uinfo"})</code></li>
+        </ul>
+        Запрос к домену <code>any-site.ru</code> будет содержать куки!!!<br>
+        Но вызывающая сторона не получит содержимое ответа.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>CSRF</h2>
+        <p>Cross Site Resource Forgery</p>
+        <img src="pictures/csrf.png" class="center">
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Методы борьбы с CSRF</h2>
+        <ul>
+            <li>Проверка метода <code>@require_POST</code></li>
+            <li>Проверка заголовка <code>Referer</code></li>
+            <li>Проверка CSRF-токенов</li>
+            <li>(*) Проверка заголовка <code>X-Requested-With</code></li>
+        </ul>
+        <script type="snippet" lang="django">
+            <form method="POST" action="/blog/add">
+                {% csrf_token %}
+            </form>
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>JSONP</h2>
+        Запрос
+        <script type="snippet" lang="html">
+        <&#8203;script src="https://partner.ru/?callback=func123">
+        <&#8203;/script>
+        </script>
+        Ответ
+        <script type="snippet" lang="javascript">
+            func123({"news": ["blablabla", "more"]})
+        </script>
+        <br>
+        Вы не контролируете КТО делает JSONP вызов, нельзя использовать
+        для передачи личных данных пользователя.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>AJAX - CORS</h2>
+        Запрос
+        <script type="snippet" lang="text">
+            GET /messages HTTP/1.1
+            Host: partner.ru
+            Cookie: sessid=a3b4d510c8712403a86f978cbb3
+            Origin: https://yoursite.ru
+        </script>
+        Ответ
+        <script type="snippet" lang="text">
+            HTTP/1.1 200 OK
+            Content-Type: application/json
+            Access-Control-Allow-Origin: https://yoursite.ru
+            Access-Control-Allow-Credentials: true
+        </script>
+        Сервер знает <code>Origin</code> и разрешает браузеру показать содержимое.
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>XSS</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>XSS - Cross Site Scripting</h2>
+        <b>XSS</b> - использование непроверенных данных в коде страницы.
+        Позволяет злоумышленнику разместить вредоносный JavaScript код на вашей странице и
+        выполнить его на компьютере пользователя. Злоумышленник получает доступ к данным пользователя.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Passive XSS</h2>
+        <img src="pictures/xss1.png" class="center"/>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Active XSS</h2>
+        <img src="pictures/xss2.png" class="center"/>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Способы борьбы</h2>
+        Обработка выходных данных:
+        <ul>
+            <li>Валидация (проверка содержимого)</li>
+            <li>Экранирование (эскейпинг) опасных символов (<code>&lt; &gt; &quot; &apos;</code>)</li>
+            <li>Очистка входных данных</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Экранирование</h2>
+        <script type="snippet" lang="django">
+            <h2>{{ user.nick|escapehtml }}</h2>
+            <p post_id="{{request.GET.post_id|escapejs}}">
+                {{post.text|escapehtml|linebreaks}}
+            </p>
+            <&#8203;script>
+                var POST_ID = {{ request.GET.post_id|escapejs }};
+                var USER_NICK = "{{ user.nick|escapejs }}";
+                var USER_NICK = `{{ user.nick|escapejs }}`;
+            <&#8203;/script>
+        </script>
+        * Шаблонизатор - сферический в вакууме
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Валидация / очистка</h2>
+        <ul>
+            <li>Разрешать только простые типы int/date/text</li>
+            <li>Не загружать и не хранить HTML вообще <br>
+                <code><&#8203;img src="..." onerror="alert(1)"/></code>
+            </li>
+            <li>Использовать более простые форматы: Wiki / Markdown</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Fishing</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Fishing</h2>
+        <img src="pictures/fishing.jpg" class="center"/>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Open Redirect</h2>
+        <p>
+        Как отправить пользователя на фишинговую страницу ?
+        </p>
+        <p>
+        Сокращатели URL-ов<br>
+        <code>https://bit.ly/hzchtotam</code>
+        </p>
+        <p>
+            Open redirect<br> <code>https://site.ru/login?next=https://fake-site.ru</code>
+        </p>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Injection</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>SQL Injection</h2>
+        <script type="snippet" lang="python">
+            sql = "SELECT * FROM posts WHERE id = " \
+                + str(request.GET['post_id'])
+
+            sql = "SELECT * FROM posts WHERE id = {id}" \
+                .format(id=request.GET['post_id'])
+
+            cursor.execute(sql)
+        </script>
+        Уязвимость:<br>
+        <code>https://site.ru/post/?post_id=1;DROP TABLE posts;</code>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Как избежать ?</h2>
+        ORM
+            <script type="snippet" lang="python">
+                Posts.objects.get(request.GET['post_id'])
+            </script>
+        Эскейпинг
+            <script type="snippet" lang="python">
+                cursor.execute(
+                    "SELECT * FROM posts WHERE id = %s", 
+                    [ request.GET['post_id'] ])
+            </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Иногда это не работает</h2>
+        <script type="snippet" lang="sql">
+            SELECT * FROM posts WHERE id IN ({ids});
+
+            SELECT * FROM posts ORDER BY {order_column};
+
+            SELECT * FROM {table_name} WHERE id = {id};
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>В таком случае</h2>
+        Приведение типов
+        <script type="snippet" lang="python">
+            ids = [ int(i) for i in request.GET.getlist('post_id') ]
+            sql = "SELECT * FROM posts WHERE id IN ({ids})" \
+                .format(ids=','.join(ids))
+        </script>
+        Проверка возможнных значений
+        <script type="snippet" lang="python">
+        order = request.GET['order']
+        valid = {'rating', 'added_at'}
+        if order in valid:
+            sql = "SELECT * FROM posts ORDER BY " + order
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Command Injection</h2>
+        <script type="snippet" lang="python">
+            month = request.GET['month']
+            cmd = "ls /home/backups/" + month
+            output = subproces.check_output(cmd, shell=True)
+            # ...
+        </script>
+        Уязвимость<br>
+        <code>http://site.ru/backups/?month=may;cat+/etc/passwd</code>
+        <code>http://site.ru/backups/?month=../../../../etc/passwd</code>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Послушать занимательное</h2>
+        <a href="https://www.youtube.com/playlist?list=PLrCZzMib1e9qiiSWgZ6pI5HiQzFc4hhdo">Безопасность интернет-приложений</a>
+        - Ярослав Рабоволюк
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
