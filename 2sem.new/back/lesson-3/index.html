@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Углубленная Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Углубленная Backend разработка</h1>
+        <p><a href="https://github.com/toshunster/">Антон Кухтичев</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2 style="font-size: 340%">ORM, миграции, репликации, шардинг</h2>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Теоретическая часть</h2>
+        <ul>
+            <li>ORM;</li>
+            <li>Миграции;</li>
+            <li>Репликация;</li>
+            <li>Шардирование.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Практическая часть</h2>
+        <ul>
+            <li>Создание классов для работы с ORM;</li>
+            <li>Написание менеджера и миграций.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Object-Relational Mapping (ORM)</h2>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Классы</h2>
+        <ul>
+            <li>Классы определяют сущность;</li>
+            <li>Классы содержат данные и методы;</li>
+            <li>Классы могут наследовать данные и методы др. классов;</li>
+            <li>В качестве данных классы могут содержать экземпляры других классов, в том числе и списков.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Базы данных</h2>
+        <ul>
+            <li>Основным элементом является таблица;</li>
+            <li>Таблицы содержат простые типы данных;</li>
+            <li>Данные могут содержать массивы и списки;</li>
+            <li>Таблицы могут быть связаны внешними ключами.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Объектно-реляционное отображение</h2>
+        Прослойка между БД и кодом, которая позволяет записывать/читать данные из БД в виде объектов.
+        <ul>
+            <li>Позволяет приложениям БД работать с объектами вместо таблиц или SQL;</li>
+            <li>Операции выполняются над объектами, а потом прозрачно транслируются в команды БД при помощи ORM;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>ORM и Flask</h2>
+        <b>SQLAlchemy</b> — это программное обеспечение с открытым исходным кодом для работы с базами данных при помощи языка SQL.
+        <ul>
+            <li>Реализует технологию программирования ORM;</li>
+            <li>Позволяет описывать структуры БД и способы взаимодействия с ними прямо на языке Python;</li>
+        </ul>
+    </div></section>
+    
+
+    <section class="slide"><div>
+        <h2>ORM и Flask</h2>
+        Устанавливаем 
+        <script type="snippet" lang="bash">
+        # Для работы с ORM.
+        pip install flask_sqlalchemy
+        # Для работы с менеджером.
+        pip install flask_script
+        # Для работы с миграциями.
+        pip install flask_migrate
+        </script>
+    </div></section>
+
+    <section class="slide"><div>
+        <script type="snippet" lang="python">
+        from flask import Flask
+        from flask_sqlalchemy import SQLAlchemy
+    
+        app = Flask(__name__)
+        app.config['SQLALCHEMY_DATABASE_URI'] = 
+            'postgresql://username:password@localhost/dbname'
+        db = SQLAlchemy(app)
+        </script>
+        <ul>
+            <li>SQLALCHEMY_DATABASE_URI - путь/URI базы данных, который будет использоваться для подключения;</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Создание модели</h2>
+        <script type="snippet" lang="python">
+        class Member(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+            username = db.Column(db.String(80), unique=True, nullable=False)
+        
+            def __init__(self, username):
+                self.username = username
+        </script>
+        <ul>
+            <li>Создали новую модель Member, унаследованную от db.Model;</li>
+            <li>Далее определяем поля при помощи db.Column;</li>
+            <li>db.Column принимает название колонки, тип.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+    <h2>Создание модели. One-to-Many</h2>
+    <script type="snippet" lang="python">
+    class Person(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        name = db.Column(db.String(50), nullable=False)
+        addresses = db.relationship('Address', backref='person', lazy=True)
+
+    class Address(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        email = db.Column(db.String(120), nullable=False)
+        person_id = db.Column(db.Integer, db.ForeignKey('person.id'),
+            nullable=False)
+    </script>
+    <ul>
+        <li>Вместо db.Column делаем db.relationship;</li>
+        <li><code>backref</code> -- объявили, что у Address будет поле person;</li>
+        <li><code>lazy</code> определяет, когда SQLAlchemy загружит данные из БД.</li>
+    </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>lazy</h2>
+        Существует несколько типов, чему может быть равно lazy:
+        <ul>
+            <li><code>'select'/True</code>; Загрузит данные, используя select;</li>
+            <li><code>'joined'/False</code>; Загрузит данные, используя join;</li>
+            <li><code>'subquery'</code>; То же, что и joined, но использует подзапрос;</li>
+            <li><code>'dynamic'</code>; Будет полезно, если в дальнейшем захотите применить дополнительные фильтры;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Создание модели. Many-to-Many</h2>
+        <script type="snippet" lang="python">
+        tags = db.Table('tags',
+            db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
+            db.Column('page_id', db.Integer, db.ForeignKey('page.id'), primary_key=True)
+        )
+
+        class Page(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+            tags = db.relationship('Tag', secondary=tags, lazy='subquery',
+                backref=db.backref('pages', lazy=True))
+
+        class Tag(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+        </script>
+        <ul>
+            <li>Нужно использовать вспомогательную таблицу для реализации Many-to-Many;</li>
+        </ul>
+    </div></section>
+    
+
+    <section class="slide shout"><div>
+        <h2>Миграции</h2>
+    </div></section>
+    <section class="slide"><div>
+        <h2>Flask-Migrate</h2>
+        pip install Flask-Migrate
+        <ul>
+            <li>Alembic поддерживает репозиторий миграции, который является каталогом, в котором хранится его сценарии миграции;</li>
+            <li>Генерирует скрипт перехода между предыдущим состоянием и следущим;</li>
+            <li>Папку migrations нужно добавить в систему контроля версий;</li>
+            <li>Скрипты "перехода" между состояниями хранятся в migrations/versions.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>С чего начать?</h2>
+        Можно попробовать так...
+        <script type="snippet" lang="python">
+        from flask_migrate import Migrate
+        ...
+        db = SQLAlchemy(app)
+        # Cоздадим класс миграции.
+        migrate = Migrate(app, db)
+        </script>
+        ... но в таком случае придётся делать отдельно.
+    </div></section>
+
+    <section class="slide"><div>
+        Flask-Script - расширение, предоставляющее поддержку для написания внешних скриптов.
+        <script type="snippet" lang="python">
+        from flask import Flask
+        from flask_sqlalchemy import SQLAlchemy
+        from flask_script import Manager
+        from flask_migrate import Migrate, MigrateCommand
+
+        app = Flask(__name__)
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
+        db = SQLAlchemy(app)
+        migrate = Migrate(app, db)
+
+        manager = Manager(app)
+        manager.add_command('db', MigrateCommand)
+
+        class User(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+            name = db.Column(db.String(128))
+
+        if __name__ == '__main__':
+            manager.run()
+        </script>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Репликация</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Определение репликации</h2>
+        Репликация (replication) - хранение копий одних и тех же данных на нескольких машинах.
+        Причины репликации данных:
+        <ul>
+            <li>ради хранения данных географически близко к пользователям (и сокращения, таким образом, задержек);</li>
+            <li>чтобы система могла продолжать работать при отказе некоторых ее частей (и повышения, таким образом, доступности);</li>
+            <li>для горизонтального масштабирования количества машин, обслуживающих запросы на чтение (и повышения, таким образом, пропускной способности по чтению).</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Виды репликации</h2>
+        Если реплицируемые данные не меняются с течением времени, то репликация не представляет сложности: просто нужно однократно скопировать их на каждый узел и всё.
+        Основные сложности репликации заключаются в том, что делать с изменениями реплицированных данных.
+        <ul>
+            <li>С одним ведущим узлом (single-leader);</li>
+            <li>С несколькими ведущими узлами (multi-leader);</li>
+            <li>Без ведущего узла (leaderless).</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>С одним ведущим узлом (single-leader)</h2>
+        <img width="100%" src="pictures/replica_1.png" class="center">
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>С несколькими ведущими узлами</h2>
+        <img width="100%" src="pictures/replica_2.png" class="center">
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Виды репликации</h2>
+        <ul>
+            <li>Производительность. </li>
+            <li>Устойчивость к перебоям в обслуживании ЦОДов</li>
+            <li>Устойчивость к проблемам с сетью</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Без ведущего узла (leaderless)</h2>
+        Клиенты отправляют информацию о каждой из операций записи одному из нескольких узлов и читают из нескольких узлов па- раллельно, чтобы обнаружить узлы с устаревшими данными и внести поправки.
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Шардирование</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Что это такое?</h2>
+        В случае очень больших наборов данных или объёмов обрабатываемой информации репликаций недостаточно: необходимо разбить данные на секции (partitions), иначе говоря, выполнить шардинг (sharding) данных.
+
+        Секционирование (partitioning), представляет собой способ умышленного разбиения большого набора данных на меньшие.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Когда нужно применять шардирование?</h2>
+        <ul>
+            <li>Когда функциональное разбиение и репликация не помогают;</li>
+            <li>Разбиваем данные на маленькие кусочки и храним на многих серверах;</li>
+            <li>“Единственное” решение для крупного масштаба;</li>
+            <li>Нужно аккуратное планирование.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Подходы к секционированию</h2>
+        <ul>
+            <li>Секционирование по диапазонам значений ключа (ключи сортируются и секция содержит все ключи, начиная с определенного минимума до определенного максимума);</li>
+            <li>Хеш-секционирование (вычисляется хеш-функция каждого ключа и к каждой секции относится определенный диапазон хешей);</li>
+            <li>“Единственное” решение для крупного масштаба;</li>
+            <li>Нужно аккуратное планирование.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Домашнее задание</h2>
+        <ul>
+            <li>Переписать БД из первого семестра на модели (4 балла)</li>
+            <li>Сделать миграцию и закоммитить её (2 балла);</li>
+            <li>Переписать методы, пищущие в БД, с использование ORM (4 балла);</li>
+        </ul>
+        <b>Срок сдачи:</b> следующее занятие.
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
