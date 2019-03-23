@@ -6,6 +6,7 @@
    - [:hover](https://developer.mozilla.org/ru/docs/Web/CSS/:hover)
    - [animations](https://developer.mozilla.org/ru/docs/Web/CSS/CSS_Animations/Ispolzovanie_CSS_animatciy)
    - [viewport](https://developer.mozilla.org/ru/docs/Mozilla/Mobile/Viewport_meta_tag)
+   - [Эмуляция мобильных устройств](https://developers.google.com/web/tools/chrome-devtools/device-mode/)
 - Заменить обычные `css` классы на [CSS Modules](https://github.com/css-modules/css-modules) во всех компонентах
 - Добавить украшательства в компоненты
    - `transition` для свойств смены цвета/фона/теней/размеров при `:hover`, `:active` на кнопки, элементы списка (чатов, например)
