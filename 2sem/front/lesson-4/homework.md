@@ -1,5 +1,7 @@
 ## Домашнее задание 4
 
+* Каждый пункт ДЗ - обязательный, кроме бонуса.
+
 - Ознакомиться с документацией по ссылкам
    - [CSS Modules в CRA](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet)
    - [:active](https://developer.mozilla.org/ru/docs/Web/CSS/:active)
