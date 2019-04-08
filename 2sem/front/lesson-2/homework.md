@@ -1,5 +1,7 @@
 ## Домашнее задание 2
 
+* Каждый пункт ДЗ - обязательный, кроме бонуса.
+
 - Ознакомиться с документацией по ссылкам
    - [Web Workers API](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API)
    - [Service Workers – введение](http://bit.ly/service-workers-intro)
