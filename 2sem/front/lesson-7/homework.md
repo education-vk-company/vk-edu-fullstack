@@ -5,7 +5,7 @@
 - Ознакомиться с документацией по ссылке
    - [Глобальные методы jest](https://jestjs.io/docs/en/api)
    - [Проверочные методы jest](https://jestjs.io/docs/en/expect)
-- Откопать у себя утилиту `getReadableSize` из ДЗ2 1 семестра и написать для нее тесты
+- Откопать у себя утилиту `getReadableSize` из [ДЗ2](https://github.com/frontend-track-mail-ru/tt-fullstack/blob/master/1sem/front/lesson-2/homework.md) 1 семестра и написать для нее тесты
    - Функция что-то возвращает
    - Функция возвращает строку
    - Функция не принимает неправильные типы (не `Number`), должна возвращать при этом `false`
