@@ -24,7 +24,7 @@
 
 # Пример теста
 
-```
+```javascript
 // getReadableSize.test.js
 
 import { getReadableSize } from './getReadableSize';
