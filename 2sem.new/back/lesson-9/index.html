@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Углубленная Backend разработка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../node_modules/shower-bright/styles/screen.css">
+    <link rel="stylesheet" href="../../../css/highlight/github.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+</head>
+<body class="list">
+    <header class="caption">
+        <h1>Углубленная Backend разработка</h1>
+        <p><a href="https://github.com/toshunster/">Антон Кухтичев</a></p>
+    </header>
+
+    <section class="slide shout"><div>
+        <h2 style="font-size: 340%">Микросервисы</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>План лекции</h2>
+        <ul>
+            <li>Микросервисы: определение, преимущества и принципы;</li>
+            <li>Сокеты, TCP, библиотеки socket, beautiful soup;</li>
+            <li>Написание тривиального демона.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <img src="pictures/developer.jpeg" class="center" style="width: 65%">
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Что это такое микросервисы?</h2>
+        <b>Микросервисы</b> - это небольшие, автономные, совместно работающие сервисы.
+        <br/>
+        Небольшие и нацеленные на то, чтобы хорошо справляться только с одной работой.
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Основные преимущества</h2>
+        <ul>
+            <li>Технологическая разнородоность;</li>
+            <li>Устойчивость;</li>
+            <li>Масштабирование;</li>
+            <li>Простота развёртывания;</li>
+            <li>Компонуемость;</li>
+            <li>Оптимизация с последующей замены.</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Немного критики</h2>
+        <ul>
+            <li>Сетевые задержки;</li>
+            <li>Форматы сообщений;</li>
+            <li>Баланс нагрузки и отказоустойчивости;</li>
+        </ul>
+    </div></section>
+   
+    <section class="slide"><div>
+        <h2>Принципы микросервисов</h2>
+        <img src="pictures/microservice_principe.png" class="center" style="width: 70%">
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Написание демона</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Требования</h2>
+        <ul>
+            <li>Во Flask-приложении из сообщения берём первый урл;</li>
+            <li>Отправляем урл демону, получаем json, содержащий поля url, title, img, desc;</li>
+            <li>Отдаём фронтэнду информацию, как урл можно отрисовать;</li>
+        </ul>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Сокеты</h2>
+        <b>Сокеты</b> (англ. socket — разъём) — название программного интерфейса для обеспечения обмена данными между процессами.
+        Суть работы:
+        <ul>
+            <li>на одном компьютере программа открывает сокет;</li>
+            <li>слушает какой-то порт (в случае с TCP и UDP);</li>
+            <li>другая программа, указав IP и этот самый порт, подключается к слушающей порт программе;</li>
+            <li>дальше они обмениваются какими надо данными, после чего закрывают соединение.</li>
+        </ul>
+    </div></section>
+    
+    <section class="slide"><div>
+        <h2>Сервер TCP</h2>
+        Суть TCP-соединения:
+        <ul>
+            <li>одна программа устанавливает соединение с другой;</li>
+            <li>происходит обмен данными;</li>
+            <li>после завершения работы соединение должно быть закрыто.</li>
+        </ul>
+        Данные в TCP — это поток байтов. Разделять его на отдельные сообщения придётся самой программе.
+    </div></section>
+  
+    <section class="slide"><div>
+        <h2>Некоторые полезные функции модуля socket</h2>
+        <ul>
+            <li><code>bind</code> - связывает сокет с одним или всеми из имеющихся у компьютера хостов (IP-адресов) и каким-либо свободным портом;</li>
+            <li><code>listen</code> - прослушивание порта;</li>
+            <li><code>accept</code> - принимает соединение. Ждёт появление входящего соединения и возвращает связанный с ним сокет и адрес;</li>
+            <li><code>recv</code> - чтение данных. Тип возвращаемых данных — bytes;</li>
+            <li><code>send</code> - отправка данных в сокет. </li>
+            <li><code>close</code> - закрытие сокета</li>
+        </ul>
+    </div></section>
+
+    <section class="slide shout"><div>
+        <h2>Практика</h2>
+    </div></section>
+
+    <section class="slide"><div>
+        <h2>Домашнее задание</h2>
+        <ul>
+            <li>Написать собственный микросервис, добавляющий доп. функционал мессенджеру (1 балл);</li>
+            <li>Сделать вызов микросервиса асинхронным (5 баллов);</li>
+            <li>Добавление сервиса в docker-compose для проекта (4 балла);</li>
+        </ul>
+    </div></section>
+
+    <div class="progress"><div></div></div>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../node_modules/shower-core/shower.min.js"></script>
+    <script src="../../../js/init.js"></script>
+
+</body>
+</html>
