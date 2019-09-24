@@ -39,9 +39,9 @@
 
   1. В вашем проекте есть три файла: `convertBytesToHuman.js`, `correctSentence.js`, `nonUniqueElements.js`;
   2. В этих файлах даны тело функци и задание, что нужно сделать;
-  3. После реализации всех трех функций, вам необходимо написать тест на функцию `convertBytesToHuman`.
+  3. После реализации всех трех функций, вам необходимо написать тест на функцию `convertBytesToHuman`;
 
-  Тест должен быть написан в файле `convertBytesToHuman.test.js`. Вы можете посмотреть на реализацию тестов в файлах `correctSentence.test.js` и `nonUniqueElements.test.js`;
+  Тест должен быть написан в файле `convertBytesToHuman.test.js`. Вы можете посмотреть на реализацию тестов в файлах `correctSentence.test.js` и `nonUniqueElements.test.js`.
 
   4. После выполнения задания рекомендуется изучить окружение проекта. Просмотреть все инструменты и их конфигурацию.
 
