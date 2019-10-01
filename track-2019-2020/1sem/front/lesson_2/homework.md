@@ -30,3 +30,36 @@ yo track-mail:web-components
 - При обновлении страницы уже "отправленные" сообщения загружаются из `localStorage`;
 - Добавить линтер на проект с конфигом `airbnb`;
 - Добавить `npm` скрипт `test` (должен запускаться по `npm run test`), который будет запускать линтер.
+
+#### Деплой домашнего задания #2
+
+Для развертывания домашнего задания на gh-pages необходимо убедиться, что в ваш `.travis.yml` конфиг выголядит следующим образом:
+
+```
+language: node_js
+node_js:
+  - "stable"
+
+before_install:
+  - cd web-components
+
+script:
+  - npm run test
+  - npm run build
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $repo_token
+  local_dir: web-components/build
+  on:
+    branch:
+      - master
+      - devel
+```
+
+Ключевые изменения: `before_install` и `deploy.local_dir`.
+Теперь сборка происходит из директории `web-components`.
+
+При сдаче дз необходимо убедиться, что у вас без ошибок выполняется команда `npm run test`.
+После создания пулл реквеста у вас проходит сборка проекта в трэвисе.
