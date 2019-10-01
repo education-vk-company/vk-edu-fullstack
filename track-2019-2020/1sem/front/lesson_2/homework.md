@@ -5,10 +5,10 @@
 - [Устройство браузера](https://html5rocks.appspot.com/en/tutorials/internals/howbrowserswork/) и [архитектура Chrome](https://developers.google.com/web/updates/2018/09/inside-browser-part1)
 - [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/)
 - [Учебник JavaScript](http://learn.javascript.ru/js), в частности его разделы о [современных возможностях js](http://learn.javascript.ru/es-modern), [DOM](https://learn.javascript.ru/document) и [WebComponents](https://learn.javascript.ru/webcomponents)
-- [Изучить eslint](https://eslint.org/docs/user-guide/getting-started)
+- [Инструмент eslint](https://eslint.org/docs/user-guide/getting-started)
 - [Установка и настройка eslint](https://travishorn.com/setting-up-eslint-on-vs-code-with-airbnb-javascript-style-guide-6eb78a535ba6)
 
-## Реализовать приложение Messenger
+## Реализовать экран чата приложения Messenger
 
 Используем генератор:
 
@@ -28,5 +28,5 @@ yo track-mail:web-components
 - После нажатия на кнопку поле ввода должно очищаться;
 - Сообщение должно содержать текст, имя отправителя и время отправки (формат, в котором это будет храниться в `localStorage` необходимо придумать самим);
 - При обновлении страницы уже "отправленные" сообщения загружаются из `localStorage`;
-- Добавить линтер на проект с конфигом `airbnb`
-- Добавить `npm` скрипт `test` (должен запускаться по `npm run test`), который будет запускать линтер
+- Добавить линтер на проект с конфигом `airbnb`;
+- Добавить `npm` скрипт `test` (должен запускаться по `npm run test`), который будет запускать линтер.
