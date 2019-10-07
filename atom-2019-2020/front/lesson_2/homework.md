@@ -4,6 +4,8 @@
 
 - [Устройство браузера](https://html5rocks.appspot.com/en/tutorials/internals/howbrowserswork/) и [архитектура Chrome](https://developers.google.com/web/updates/2018/09/inside-browser-part1)
 - [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/)
+- [EventLoop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
+- Интерфейсы [Event](https://developer.mozilla.org/en-US/docs/Web/API/Event) и [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
 - [Учебник JavaScript](http://learn.javascript.ru/js), в частности его разделы о [современных возможностях js](http://learn.javascript.ru/es-modern), [DOM](https://learn.javascript.ru/document) и [WebComponents](https://learn.javascript.ru/webcomponents).
 - [Инструмент eslint](https://eslint.org/docs/user-guide/getting-started)
 - [Установка и настройка eslint](https://travishorn.com/setting-up-eslint-on-vs-code-with-airbnb-javascript-style-guide-6eb78a535ba6)
