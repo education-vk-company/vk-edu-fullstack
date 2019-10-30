@@ -2,7 +2,7 @@
 
 ## Задание:
 - Закрепить знания [React.js](https://reactjs.org/docs/getting-started.html)
-  - Вспомнить, как мы разворачивали свое окружение для разработки [тут](https://github.com/track-mail-ru/track-lecture-samples) (но не использовать это при выполнении ДЗ, мы будем использовать `Create React App` для скорости)
+  - Вспомнить, как мы разворачивали свое окружение для разработки [тут](https://github.com/track-mail-ru/lesson-5-samples) (но не использовать это при выполнении ДЗ, мы будем использовать `Create React App` для скорости)
   - Пройти [Tutorial](https://reactjs.org/tutorial/tutorial.html)
   - Изучить [Docs](https://reactjs.org/docs/hello-world.html)
   - [Скринкаст ч.1](https://cloud.mail.ru/public/aZA1/4B5U2JkYs)
