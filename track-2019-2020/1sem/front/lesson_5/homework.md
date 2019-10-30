@@ -2,9 +2,11 @@
 
 ## Задание:
 - Закрепить знания [React.js](https://reactjs.org/docs/getting-started.html)
-	- Вспомнить, как мы разворачивали свое окружение для разработки [тут](https://github.com/track-mail-ru/track-lecture-samples) (но не использовать это при выполнении ДЗ, мы будем использовать `Create React App` для скорости)
-	- Пройти [Tutorial](https://reactjs.org/tutorial/tutorial.html)
-	- Изучить [Docs](https://reactjs.org/docs/hello-world.html)
+  - Вспомнить, как мы разворачивали свое окружение для разработки [тут](https://github.com/track-mail-ru/track-lecture-samples) (но не использовать это при выполнении ДЗ, мы будем использовать `Create React App` для скорости)
+  - Пройти [Tutorial](https://reactjs.org/tutorial/tutorial.html)
+  - Изучить [Docs](https://reactjs.org/docs/hello-world.html)
+  - [Скринкаст ч.1](https://cloud.mail.ru/public/aZA1/4B5U2JkYs)
+  - [Скринкаст ч.2](https://cloud.mail.ru/public/5uoU/29Nosa19E)
 - Изучить [Create React App](https://github.com/facebook/create-react-app)
 - Обновить генератор **Инструкция к этому пункту находится ниже** <details>
   <summary>Как обновить генератор</summary>
@@ -48,8 +50,6 @@
 - Переписать компоненты на `React`
 - Восстановить стили для всех компонентов
 - Восстановить функциональность всех компонентов
-- [Скринкаст ч.1](https://cloud.mail.ru/public/aZA1/4B5U2JkYs)
-- [Скринкаст ч.2](https://cloud.mail.ru/public/5uoU/29Nosa19E)
 
 ## Рекомендации к архитектуре вашего приложения
 * То приложение, которое уже у вас получено при помощи генератора можно использовать как пример. Ненужные части нужно удалить
