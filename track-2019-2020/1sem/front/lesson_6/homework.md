@@ -2,11 +2,12 @@
 
 ## Ознакомиться с документацией по ссылкам
 
--
+- Изучить [react-router](https://reacttraining.com/react-router/web/guides/quick-start)
 
 ## Задание:
 
-*
+* Сверстать страницу [профиля](https://scene.zeplin.io/project/5b9a4b6aae5aa72171a8e5cf/screen/5b9a4b8053ffee1696085381)
+* Настроить клиентскую маршрутизацию для своих страниц
 
 ## Срок: 25 ноября
 
