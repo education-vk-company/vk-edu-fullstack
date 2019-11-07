@@ -19,10 +19,10 @@
   ```bash
   npm i -g generator-track-mail
   ```
-  3. Проверяем версию установленного генератора. Должно получиться так (версия 0.4.1):
+  3. Проверяем версию установленного генератора. Должно получиться так (версия 0.4.2):
   ```
   $ npm list -g --depth 0 | grep track-mail
-  ├── generator-track-mail@0.4.1
+  ├── generator-track-mail@0.4.2
   ```
 
 </details>
