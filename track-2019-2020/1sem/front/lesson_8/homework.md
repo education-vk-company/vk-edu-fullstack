@@ -1,22 +1,17 @@
-### Взаимодействие с сервером
+### Домашнее задание #8
 
-Слайды доступны по адресу: https://track-mail-ru.github.io/client-server/
+#### Ознакомиться с материалами по ссылке  
 
-### Полезные ссылки
-
+* [React: AJAX and APIs](https://reactjs.org/docs/faq-ajax.html)
 * [What are Long-Polling, Websockets, Server-Sent Events (SSE) and Comet?](https://stackoverflow.com/a/12855533/3984110)
 * [XHR Fetch Axios code examples](https://github.com/academind/xhr-fetch-axios-intro/tree/master)
-* [Jake Archibald: In The Loop](https://www.youtube.com/watch?v=cCOL7MC4Pl0&vl=iw)
-* [Sysetm design primer](https://github.com/donnemartin/system-design-primer)
-* [What happens when you type google.com into your browser](https://github.com/alex/what-happens-when)
-* [HTTP1.1](https://tools.ietf.org/html/rfc7231)
-* [HTTP2](https://tools.ietf.org/html/rfc7540)
-* [JSON data mock](https://www.json-generator.com/)
-* [Normalizr experiments](https://stackblitz.com/edit/normalizr-playground-jzc2zj?file=index.ts)
 
-### Домашнее задание
+Если испытываете проблемы с написанием запроса на сервер на реакте, помогут две статьи с примерами:
 
-<font size="30px">Необходимо:</font>
+1. [How to send HTTP Requests in React](https://malcoded.com/posts/react-http-requests-axios/)
+1. [Запрос к API c React Hooks, HOC или Render Prop](https://habr.com/ru/post/453866/)
+
+### Задание
 
 * Добавить отдельный "общий" чат к существующему списку чатов
 * Передавать новые сообщения на бэк
@@ -103,6 +98,5 @@ const t = setInterval(() => pollItems(), 3000);
 1. Сообщения необходимо отправлять с разных клиентов/вкладок.
 1. При сдаче дз приложить гиф/видео с обновлением сообщений в общем чате.
 
-### Сдача дз без штрафа:
+### Срок: 4 декабря
 
-До 4 декабря
