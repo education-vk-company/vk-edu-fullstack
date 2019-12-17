@@ -46,6 +46,10 @@
 
 Пример запроса: https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22
 
+### Прогноз погоды на 3 дня
+
+Пример запроса: https://samples.openweathermap.org/data/2.5/forecast?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22
+
 ## Важно:
 
 * Для сдачи экзамена необходимо создать `PR`, который должен включать в себя только проделанную работу.
