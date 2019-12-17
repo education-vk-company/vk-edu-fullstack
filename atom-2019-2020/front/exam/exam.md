@@ -35,16 +35,16 @@
 
 ### `By city name`
 
-Пример запроса: https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22
+Пример запроса: https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22&units=metric
 
 ### `By city ID`
 
-Пример запроса: https://api.openweathermap.org/data/2.5/weather?id=2172797
+Пример запроса: https://samples.openweathermap.org/data/2.5/weather?id=2172797&appid=b6907d289e10d714a6e88b30761fae22&units=metric
 Для получения списка `ID` необходимо скачать [json](http://bulk.openweathermap.org/sample/city.list.json.gz), выбрать из него список "избранных" 10 локаций (ID и name) и захардкодить их в приложение.
 
 ### `By geographic coordinates`
 
-Пример запроса: https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139
+Пример запроса: https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22&units=metric
 
 ## Важно:
 
