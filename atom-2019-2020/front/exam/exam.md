@@ -30,7 +30,7 @@
 ### `By city ID`
 
 Пример запроса: https://api.openweathermap.org/data/2.5/weather?id=2172797
-Для получения списка `ID` необходимо скачать [json](http://bulk.openweathermap.org/sample/city.list.json.gz), выбрать из него список "избранных" 10 локаций и захардкодить их в приложение.
+Для получения списка `ID` необходимо скачать [json](http://bulk.openweathermap.org/sample/city.list.json.gz), выбрать из него список "избранных" 10 локаций (ID и name) и захардкодить их в приложение.
 
 ### `By geographic coordinates`
 
