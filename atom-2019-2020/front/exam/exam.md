@@ -8,15 +8,17 @@
 
 ```bash
 cd <ваш проект>
-# 1. для избежания проблем при деплое,
-# стоит заранее удалить папку node_modules и файл package-lock.json
-# 2. обновить в корневом проекте react-scripts до 3.3.0
-# 3. выполнить npm i
-# 4. сохранить весь текущий прогресс, если такой имеется
-# (git stash или git commit)
-# 5. создать проект в master ветке
+# 1. сохранить весь текущий прогресс, если такой имеется
+# (git stash или git commit && git push)
+# 2. Переключаемся в мастер и синхронизируемся с github
 git checkout master
 git pull origin master
+# 3. для избежания проблем при деплое,
+# стоит заранее удалить папку node_modules и файл package-lock.json
+rm -rf node_modules && rm package-lock.json
+# 4. обновить в корневом проекте react-scripts до 3.3.0
+npm i -S react-scripts@3.3.0
+# 5. создать проект в master ветке
 git checkout -b exam
 npx create-react-app exam
 ```
