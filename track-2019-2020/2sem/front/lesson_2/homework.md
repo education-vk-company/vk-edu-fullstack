@@ -21,16 +21,16 @@
 Любые собственные сценарии будут приветствоваться.
 
 - Добавить в `dev` зависимости проекта библиотеки  `puppeteer`, `jest-puppeteer`
-- Добавить в корень проекта директорию `integration`
-- В директории `integration` добавить модуль `jest.config.js`
+- Добавить в корень проекта директорию `endtoend`
+- В директории `endtoend` добавить модуль `jest.config.js`
     ```js
     module.exports = {
       preset: 'jest-puppeteer',
       testRegex: './*\\.test\\.js$',
     }
     ```
-- Добавить функциональные (е2е) тесты в директорию `integration` (eg: chat.test.js)
-- Добавить в `package.json` скрипт `"test:integration": "jest -c integration/jest.config.js",`
+- Добавить функциональные (е2е) тесты в директорию `endtoend` (eg: chat.test.js)
+- Добавить в `package.json` скрипт `"test:endtoend": "jest -c endtoend/jest.config.js",`
 - Добавить в корень проекта модуль `jest-puppeteer.config.js`
     ```js
     module.exports = {
@@ -45,11 +45,11 @@
       },
     }
     ```
-- Добавить `test:integration` к шагу в сборке
+- Добавить `test:endtoend` к шагу в сборке
 
 ## Срок: 7 марта
 
-При сдаче вам необходимо убедиться, что у вас без ошибок выполняется команда `npm run test:integration`.
+При сдаче вам необходимо убедиться, что у вас без ошибок выполняется команда `npm run test:endtoend`.
 
 После создания PR у вас прохоидт сборка (travis/now.sh)
 
