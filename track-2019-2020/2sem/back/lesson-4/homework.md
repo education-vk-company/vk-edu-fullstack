@@ -13,13 +13,13 @@ class ICache:
     def __init__(self, capacity=10):
         pass
     
-    def get(key: str) -> str:
+    def get(self, key: str) -> str:
         pass
 
-    def set(key: str, value: str) -> None:
+    def set(self, key: str, value: str) -> None:
         pass
 
-    def del(key: str) -> None:
+    def del(self, key: str) -> None:
         pass
 ```
 Проверяться работоспособность должна так:
