@@ -8,6 +8,7 @@
 - Использование профайлера (2 балла); После наполнения базы, посылать запросы и в какой-то момент времени сделать дамп результатов и графически отобразить его при помощи flamegraph или gprof2dot.
 - Реализовать класс LFUCache или LRUCache (4 балла).
 Класс должен содержать следующие методы
+```python
 class ICache:
     def __init__(self, capacity=10):
         pass
@@ -20,8 +21,9 @@ class ICache:
 
     def del(key: str) -> None:
         pass
-
+```
 Проверяться работоспособность должна так:
+```python
 from cache import LRUCache
 
 cache = LRUCache(100)
@@ -31,6 +33,6 @@ cache.set('Jesse', 'James')
 cache.get('Jesse') # вернёт 'James'
 cache.del('Walter')
 cache.get('Walter') # вернёт ''
-
+```
 Никто не осудит, если реализуете только LRUCache.
 ## Срок: Сроков нет, но вы держитесь! Всего вам доброго, хорошего настроения и здоровья!
