@@ -15,6 +15,8 @@
 - Обновить версию `CRA`
 - Добавить в `dev` зависимости проекта библиотеку `react-test-renderer`
 - Добавить в `package.json` скрипт `"test:unit": "react-scripts test",`
+- Добавить в скрипт `test` вызов `npm run test:unit -- --watchAll=false` через `&&`
+- Скрипт `test` должен запускаться в `ci` перед сборкой
 - Разработать snapshot unit тесты для атомарных компонентов
 - Выполнить `npx -p @storybook/cli sb init` для установки утилиты
 - Разработать `Storybook stories` для атомарных компонентов, они должны быть видны после запуска `npm run storybook`
