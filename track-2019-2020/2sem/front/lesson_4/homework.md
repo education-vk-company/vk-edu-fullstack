@@ -4,7 +4,7 @@
 
 - [Css-триггеры перерисовки](https://csstriggers.com/)
 - [Список действий, вызывающих перерисовку](https://gist.github.com/paulirish/5d52fb081b3570c81e3a)
-- [Инструменты анализа производительности]( http://bit.ly/perfomance-tools) и [настройки визулизации изменений](http://bit.ly/render-settings )
+- [Инструменты анализа производительности](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference) и [настройки визулизации изменений](https://developer.chrome.com/devtools/docs/rendering-settings)
 - [CSS-Modules](https://github.com/css-modules/css-modules)
 - [css-sprite-loader](https://www.npmjs.com/package/css-sprite-loader)
 
