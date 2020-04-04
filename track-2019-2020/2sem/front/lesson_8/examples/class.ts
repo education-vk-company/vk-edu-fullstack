@@ -1,4 +1,3 @@
-
 class Animal {
 	readonly nickname: string = 'Tuzik';
 	protected name: string;

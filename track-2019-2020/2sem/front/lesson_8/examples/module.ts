@@ -1,8 +1,17 @@
-import * as Module from './main';
+import * as T from './types';
 
+type TЧитайВЗадании = any;
 
-export default function translate(text: string) {
-	fetch('google.translate').then(response => {
-		return response;
-	});
+const API = '';
+
+// const someFunction = () => {};
+
+export function translate(text: string, someParam: TЧитайВЗадании /* еще параметры по желанию*/) {
+	return fetch(`${API}/что-то еще из документации`)
+		.then(response => response.json())
+		.then((data: T.IApiResponse) => {
+			// тут какой-то ваш код
+			// someFunction(blablabla);
+			console.log(data);
+		});
 };
