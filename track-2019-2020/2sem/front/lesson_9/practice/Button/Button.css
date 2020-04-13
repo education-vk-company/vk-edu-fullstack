@@ -1,0 +1,44 @@
+.root {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  padding-right: var(--paradigm-padding-control-button);
+  padding-left: var(--paradigm-padding-control-button);
+  box-sizing: border-box;
+  appearance: none;
+  width: 100%; /* mobile first */
+  min-height: var(--paradigm-size-control-height);
+  font-size: 100%;
+  line-height: 1;
+  border-radius: var(--paradigm-size-border-radius);
+  border: 1px solid var(--paradigm-color-border);
+  background-color: var(--paradigm-color-bg-secondary);
+  color: var(--paradigm-color-text);
+  box-shadow: var(--paradigm-depth1);
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.root:hover {
+  border-color: var(--paradigm-color-border-hover);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, var(--paradigm-tone-value-hover)), rgba(0, 0, 0, var(--paradigm-tone-value-hover)));
+}
+
+.root:active {
+  border-color: var(--paradigm-color-border-active);
+}
+
+.root:focus {
+  border-color: var(--paradigm-color-border-focus);
+}
+
+@media (--paradigm-layout-width-tablet) {
+  .root {
+    width: auto;
+  }
+}
+
+.text {
+  @extend .paradigm-font-control;
+}
