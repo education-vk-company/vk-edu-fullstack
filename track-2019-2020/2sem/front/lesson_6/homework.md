@@ -1,8 +1,8 @@
-# Домашнее задание
+# Домашнее задание 5
 
 ## Ознакомиться с документацией по ссылкам
 
-- [Core PWA Guides](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) 
+- [Core PWA Guides](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 - [React – Making a PWA](https://create-react-app.dev/docs/making-a-progressive-web-app/)
 
 ## Задание:
@@ -13,7 +13,7 @@
     - указать свой собственный цвет шапки [`theme_color`] ([обратить внимание на поддержку](https://caniuse.com/#search=theme-color))
     - указать для приложения запуск в полноэкранном режиме [`display`]
 
-- Реализовать поддержку оффлайн 
+- Реализовать поддержку оффлайн
 
 ## Срок: 4 апреля
 
