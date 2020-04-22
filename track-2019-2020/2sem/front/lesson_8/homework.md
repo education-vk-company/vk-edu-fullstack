@@ -4,6 +4,8 @@
 
 - [Документация к TS](https://www.typescriptlang.org/docs/handbook/)
 - [Серия коротких роликов про TS](https://www.youtube.com/watch?v=OMsP7_bCAxY)
+- https://www.typescriptlang.org/v2/en/tsconfig#outDir
+- https://www.codementor.io/@elliotaplant/understanding-javascript-module-resolution-systems-with-dinosaurs-il2oqro6e
 
 ## Задание:
 
