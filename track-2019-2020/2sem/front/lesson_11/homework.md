@@ -4,7 +4,7 @@
    - [Docker](https://docs.docker.com/get-started/)
    - [Sentry для react приложений](https://docs.sentry.io/platforms/javascript/react/)
 - Добавить докер
-   - Делать сборку в контейнере
+   - Делать сборку в контейнере (Dockerfile + docker-compose.yml)
    - Раздавать статику из контейнера
    - Докерфайл разбить на этапы: сборка, раздача
 - Добавить в приложение `Sentry`
