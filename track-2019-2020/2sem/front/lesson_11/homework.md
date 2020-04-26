@@ -2,12 +2,12 @@
 
 - Ознакомиться с документацией по ссылке
    - [Docker](https://docs.docker.com/get-started/)
-   - [Senty для реакт приложений](https://docs.sentry.io/platforms/javascript/react/)
-- Добавить докер.
+   - [Sentry для react приложений](https://docs.sentry.io/platforms/javascript/react/)
+- Добавить докер
    - Делать сборку в контейнере
    - Раздавать статику из контейнера
    - Докерфайл разбить на этапы: сборка, раздача
-- Добавить в приложение `Sentry`.
+- Добавить в приложение `Sentry`
 
 ## Срок: 10 мая
 
