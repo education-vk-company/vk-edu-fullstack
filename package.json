@@ -1,15 +1,15 @@
 {
-  "name": "tt-fullstack",
+  "name": "vk-edu-fullstack",
   "version": "1.0.0",
   "description": "Lectures and home assignments for Frontend course",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frontend-track-mail-ru/tt-fullstack.git"
+    "url": "git+https://github.com/track-mail-ru/vk-edu-fullstack.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/frontend-track-mail-ru/tt-fullstack/issues"
+    "url": "https://github.com/track-mail-ru/vk-edu-fullstack/issues"
   },
-  "homepage": "https://github.com/frontend-track-mail-ru/tt-fullstack#readme"
+  "homepage": "https://github.com/track-mail-ru/vk-edu-fullstack#readme"
 }
