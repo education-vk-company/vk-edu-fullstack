@@ -1,6 +1,6 @@
 # Домашнее задание 5
 
-## Ознакомиться с документацией по ссылкам
+## Ознакомиться с материалами и документацией по ссылкам
 - Закрепить знания [React.js](https://ru.reactjs.org/docs/getting-started.html)
   - Вспомнить, как мы разворачивали свое окружение для разработки [тут](https://github.com/track-mail-ru/lesson-5-samples) (но не использовать это при выполнении ДЗ, мы будем использовать `Create React App` для скорости)
   - Пройти [Tutorial](https://ru.reactjs.org/tutorial/tutorial.html)
