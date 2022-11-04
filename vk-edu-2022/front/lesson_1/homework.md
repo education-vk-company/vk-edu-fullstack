@@ -38,6 +38,4 @@ $ yo track-mail:functions
 
 Тест должен быть написан в файле `convertBytesToHuman.test.js`. Вы можете посмотреть на реализацию тестов в файлах `correctSentence.test.js` и `nonUniqueElements.test.js`.
 
-#### Срок сдачи ДЗ
-
-До 7 октября (включительно)
+## Срок: до 7 октября (включительно)
