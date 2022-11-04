@@ -39,3 +39,5 @@ $ yo track-mail:functions
 Тест должен быть написан в файле `convertBytesToHuman.test.js`. Вы можете посмотреть на реализацию тестов в файлах `correctSentence.test.js` и `nonUniqueElements.test.js`.
 
 ## Срок: до 7 октября (включительно)
+
+При сдаче ДЗ необходимо убедиться, что у вас без ошибок выполняется команда `npm run test`.
