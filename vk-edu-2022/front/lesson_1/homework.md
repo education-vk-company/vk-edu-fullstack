@@ -30,7 +30,7 @@ $ yo track-mail:functions
 
 Если у вас `Windows`, то работать нужно в терминале от `git-scm` или `wsl`, об этом написано в соответствующем [посте](https://education.vk.company/blog/view/455/) на портале.
 
-#### Задача
+#### Задание
 
 1. В вашем проекте есть три файла: `convertBytesToHuman.js`, `correctSentence.js`, `nonUniqueElements.js`;
 2. В этих файлах даны тело функций и задание, что нужно сделать;

@@ -8,7 +8,7 @@
 - [viewport](https://developer.mozilla.org/ru/docs/Mozilla/Mobile/Viewport_meta_tag)
 - [Эмуляция мобильных устройств](https://developers.google.com/web/tools/chrome-devtools/device-mode/)
 
-## Задание:
+## Задание
 
 - Добавить украшательства на ваши странички:
   - `transition` для свойств смены цвета/фона/теней/размеров при `:hover`, `:active` на кнопки, элементы списка (чатов, например)
