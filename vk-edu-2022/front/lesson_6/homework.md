@@ -10,6 +10,7 @@
 * Настроить клиентскую маршрутизацию для своих страниц
 * Использовать `HashRouter` в своих проектах, чтобы на `GitHub Pages` всё работало корректно
 * Сверстать страницу [профиля](https://scene.zeplin.io/project/5b9a4b6aae5aa72171a8e5cf/screen/5b9a4b8053ffee1696085381)
+* Заполнить поле `homepage` в `package.json` согласно подсказке в [документации](https://create-react-app.dev/docs/deployment/#github-pages)
 
 ## Срок: до 17 ноября (включительно)
 
