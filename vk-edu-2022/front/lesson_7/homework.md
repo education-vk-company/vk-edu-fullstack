@@ -24,7 +24,7 @@
 
 * Использовать свой backend (сервер и БД, **учесть CORS**, либо **настроить proxy**)
 * Настроить proxy для локальной разработки [по инструкции](https://create-react-app.dev/docs/proxying-api-requests-in-development/)
-* Использовать [общий фронтовый backend: общая БД – ваши сообщения смогут увидеть все](https://github.com/track-mail-ru/tt-front-server)
+* Использовать [общий фронтовый backend](https://github.com/track-mail-ru/tt-front-server). Там общая БД – ваши сообщения смогут увидеть все
 
 Если вы хотите использовать наш backend для реализации RTU с помощью SSE:
 
@@ -32,6 +32,7 @@
 * Выполнить установку зависимостей
 * Запустить локально сервер (настройки CORS уже прописаны): `npm run server`
 * Сервер будет принимать запросы по адресу `localhost:9000`
+* Сделать по аналогии с [примером](https://github.com/track-mail-ru/tt-front-server/blob/master/views/messages.pug)
 
 ### Как можно сделать запросы в коде
 
