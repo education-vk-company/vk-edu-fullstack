@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <script src="https://unpkg.com/centrifuge@3.0.1/dist/centrifuge.js"></script>
+    </head>
+    <body>
+        <div>New messages:</div>
+        <div id="text"></div>
+        <script type="text/javascript">
+            const text = document.getElementById("text");
+            const centrifuge = new Centrifuge('ws://localhost:8000/connection/websocket');
+            const sub = centrifuge.newSubscription('chat');
+            sub.on('publication', function(message) {
+                text.innerHTML += message.data + '</br>';
+            });
+            sub.subscribe();
+            centrifuge.connect();
+        </script>
+    </body>
+</html>
