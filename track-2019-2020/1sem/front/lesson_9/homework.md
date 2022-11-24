@@ -1,10 +1,10 @@
 ### Домашнее задание #9
 
-#### Ознакомиться с материалами по ссылке  
+#### Ознакомиться с материалами по ссылке
 
 * [React redux getting started](https://react-redux.js.org/introduction/quick-start)
 * [Redux getting started](https://redux.js.org/introduction/getting-started)
-* [React with router](https://redux.js.org/advanced/usage-with-react-router)
+* [Redux with router](https://redux.js.org/advanced/usage-with-react-router)
 
 
 #### Материалы для закрепления знаний по redux
@@ -16,7 +16,7 @@
 
 * Подключить redux с помощью библиотеки react-redux
 * Определить изменяемые данные, которые нужны в нескольких компонентах
-* Перенести эти данные в store 
+* Перенести эти данные в store
 * Подключить к store компоненты, которые используют эти данные
 
 ### Условия сдачи дз:
