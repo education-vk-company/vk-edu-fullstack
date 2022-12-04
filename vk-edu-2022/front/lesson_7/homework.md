@@ -30,7 +30,7 @@
 
 * Склонировать себе [репозиторий](https://github.com/track-mail-ru/tt-front-server)
 * Выполнить установку зависимостей
-* Запустить локально сервер (настройки CORS уже прописаны): `npm run server`
+* Запустить локально сервер (настройки CORS уже прописаны): `npm start`
 * Сервер будет принимать запросы по адресу `localhost:9000`
 * Сделать по аналогии с [примером](https://github.com/track-mail-ru/tt-front-server/blob/master/views/messages.pug)
 
