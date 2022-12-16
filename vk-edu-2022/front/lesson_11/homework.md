@@ -7,12 +7,13 @@
 - [Инструменты анализа производительности](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference) и [настройки визулизации изменений](https://developer.chrome.com/devtools/docs/rendering-settings)
 - [CSS-Modules](https://github.com/css-modules/css-modules)
 - [css-sprite-loader](https://www.npmjs.com/package/css-sprite-loader)
+- [Инструмент eslint](https://eslint.org/docs/user-guide/getting-started)
 
 ## Задание
 
 
 - Реализовать в вашем приложении виртуальную клавиатуру emoji
-  - При клике на клавиатуру вставлять соотв "код" смайла в текстовое поле (`:joy:`, `:+1:` и т.п.)
+  - При клике на клавиатуру вставлять соответствующий "код" смайла в текстовое поле (`:joy:`, `:+1:` и т.п.)
   - Файлы иконок можно взять [из архива](https://drive.google.com/open?id=1L76xAN15qVtYj2lB1pag0SpPX878zQiU)
   - Все имеющиеся иконки объединить в спрайт (НЕ вручную, НЕ на стороннем ресурсе, НЕ скачать готовый из интернета, а СОБРАТЬ при помощи лоадера, который указан выше)
   - При выводе сообщения в списке - заменять "коды" смайлов на иконки
@@ -21,7 +22,7 @@
   - Проанализировать с помощью инструментов (вкладки в Chrome DevTools) Lighthouse, Performance, Performance insights, Memory) и применить
   - Особое внимание уделить утечкамь памяти: забытые отписки от событий, незакрытие подключения вебсокета, поллинг
 - Установить линтеры и настроить автоматическую проверку кода перед пушем
-  - Установить библиотеки [husky](https://www.npmjs.com/package/husky) и [eslint](https://www.npmjs.com/package/eslint), взять правила [eslint-config-standard](https://www.npmjs.com/package/)eslint-config-standard
+  - Установить библиотеки [husky](https://www.npmjs.com/package/husky) и [eslint](https://www.npmjs.com/package/eslint), взять правила [eslint-config-standard](https://www.npmjs.com/package/eslint-config-standard)
   - Настроить срабатывание линтера на `pre-commit`
   - После настройки правил линтера прогнать через него весь проект и исправить имеющиеся ошибки
   - Если для `CI` вы ранее отключали работу встроенного линетера, то нужно его вернуть
