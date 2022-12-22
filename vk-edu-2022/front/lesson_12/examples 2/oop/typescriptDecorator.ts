@@ -2,7 +2,7 @@ console.log('----------------')
 console.log('METHOD DECORATOR')
 console.log('----------------')
 // method decorator
-function log(target: Function, key: string, value: any) {
+function log(target: any, key: string, value: any) {
     return {
         value: function (...args: any[]) {
             const a = args.map(a => JSON.stringify(a)).join();
@@ -24,7 +24,7 @@ class C {
 }
 
 const c = new C()
-// c.foo(2)
+c.foo(2)
 
 
 
@@ -39,13 +39,13 @@ console.log(Object.getOwnPropertyDescriptor(C.prototype, 'foo'))
 // name: "foo"
 
 
- // target === C.prototype
- // key === "foo"
- // value === Object.getOwnPropertyDescriptor(C.prototype, "foo")
+// target === C.prototype
+// key === "foo"
+// value === Object.getOwnPropertyDescriptor(C.prototype, "foo")
 
 
 
- // class decorator
+// class decorator
  console.log('---------------')
  console.log('CLASS DECORATOR')
  console.log('---------------')
@@ -72,18 +72,18 @@ console.log(new Greeter('hey ho!').greet())
 
 
 console.log('---------------------')
-console.log('CONSTRUCTOR ENCHANSER')
+console.log('CONSTRUCTOR ENHANCER')
 console.log('---------------------')
 // constructor enchanser
 
-function classEnchanser<T extends {new(...args:any[]):{}}>(constructor:T) {
+function classEnhancer<T extends {new(...args:any[]):{}}>(constructor:T) {
     return class extends constructor {
         newProperty = "new property";
         hello = "hey ho";
     }
 }
 
-@classEnchanser
+@classEnhancer
 class HeyHoyer {
     property = "property";
     hello: string;

@@ -1,10 +1,13 @@
 // console.log('Hello world!');
 
-export function identity<T>(arg: T): T {
+export function echo<T>(arg: T): T {
 	return arg;
 }
 
-export const test = identity(null);
+export const test = echo(null);
+export const testNumber = echo<number>(5);
+
+// const [state, useState] = React.useState<number>();
 
 enum Direction {
 	Diagonal = 0,

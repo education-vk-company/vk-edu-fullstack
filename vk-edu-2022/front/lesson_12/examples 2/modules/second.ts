@@ -13,7 +13,7 @@ class Martin implements IMartin {
     }
 
     public sayCool(): void {
-        console.log(`Shimba limba?`);
+        console.log(`Schimba limba?`);
     }
 }
 
