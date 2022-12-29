@@ -15,7 +15,7 @@
 
 В будущем эту утилиту нужно будет прикрутить к мессенджеру.
 
-- Получить `API key` по [ссылке](https://translate.yandex.com/developers/keys)
+- Получить `API key` по [ссылке](https://translate.yandex.com/developers/keys) (либо воспользоваться вариантом с [экзамена](../exam/exam.md))
 - Изучить документацию [API](https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/) и его методов
 - Установить `TypeScript` на компьютер глобально
 - Создать в проекте папку `./ts/utils`
