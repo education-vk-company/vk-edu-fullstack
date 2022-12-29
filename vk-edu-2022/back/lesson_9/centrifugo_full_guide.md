@@ -28,6 +28,4 @@ https://centrifugal.dev/docs/server/server_api
 
 ## js client
 
-https://fzambia.gitbooks.io/centrifugal/content/clients/javascript.html
-
-
+https://github.com/centrifugal/centrifuge-js
