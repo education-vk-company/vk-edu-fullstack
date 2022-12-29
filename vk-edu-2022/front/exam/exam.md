@@ -56,13 +56,7 @@ npx create-react-app exam --template typescript
 
 ## Информация по API
 
-* Адрес: https://yandex.com/dev/translate/doc/dg/concepts/api-overview.html
-* Получить [API KEY]()
-* Полученный `API KEY` использовать в поле `appid=<API KEY>` при отправке запросов
-
-https://yandex.com/dev/translate/doc/dg/reference/getLangs.html
-https://yandex.com/dev/translate/doc/dg/reference/detect.html
-https://yandex.com/dev/translate/doc/dg/reference/translate.html
+* Скоро появится
 
 ## Важно:
 
