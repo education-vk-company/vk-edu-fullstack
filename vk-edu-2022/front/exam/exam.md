@@ -64,7 +64,8 @@ const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': 'df5ffa97f3mshfa5277882376ad1p1db7b7jsnb69ba524116a',
-		'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+		'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com',
+		'x-rapidapi-ua': 'RapidAPI-Playground'
 	}
 };
 
