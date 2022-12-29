@@ -21,7 +21,7 @@ npx create-react-app exam --template typescript
 ```
 
 Для разработки приложения необходимо использовать модуль, разработанный в рамках [`ДЗ12`](../lesson_12/homework.md).
-Если ДЗ не выполнено, то ничего страшного, просто придется реализовать работу с API в рамках текущего задания (см. более подробную информацию об API в ДЗ12)
+Если ДЗ не выполнено, то ничего страшного, просто придется реализовать работу с API в рамках текущего задания (см. более подробную информацию об API ниже)
 
 - [ ] В корневой папке репозитория создать базовое приложение `exam` с помощью [CRA](https://github.com/facebook/create-react-app#quick-overview) по инструкции выше
 - [ ] Сверстать 2 страницы и необходимые компоненты. Использовать стили
@@ -56,7 +56,44 @@ npx create-react-app exam --template typescript
 
 ## Информация по API
 
-* Скоро появится
+
+### Получить список языков
+
+```javascript
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'df5ffa97f3mshfa5277882376ad1p1db7b7jsnb69ba524116a',
+		'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+	}
+};
+
+fetch('https://microsoft-translator-text.p.rapidapi.com/languages?api-version=3.0', options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+```
+### Перевести
+
+Для указания языка нужно указать параметр `to%5B0%5D=` и код языка из первой апишки, например, `ru`
+
+```javascript
+const options = {
+	method: 'POST',
+	headers: {
+		'content-type': 'application/json',
+		'X-RapidAPI-Key': 'df5ffa97f3mshfa5277882376ad1p1db7b7jsnb69ba524116a',
+		'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+	},
+	body: '[{"Text":"I would really like to drive your car around the block a few times."}]'
+};
+
+fetch('https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=ru&api-version=3.0&profanityAction=NoAction&textType=plain', options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+```
+
 
 ## Важно:
 
