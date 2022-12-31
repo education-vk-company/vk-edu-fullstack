@@ -42,7 +42,7 @@ npx create-react-app exam --template typescript
 
 На главной странице есть форма для ввода переводимой фразы, окно с результатом.
 
-Интерфейс позволяет выбрать из списка текущий и целевой языки.
+Интерфейс позволяет выбрать из списка исходный и целевой языки.
 
 ![Кнопка перехода на историю](./2.png)
 
@@ -76,7 +76,8 @@ fetch('https://microsoft-translator-text.p.rapidapi.com/languages?api-version=3.
 ```
 ### Перевести
 
-Для указания языка нужно указать параметр `to%5B0%5D=` и код языка из первой апишки, например, `ru`
+Для указания исходного языка нужно указать параметр `from=` и код языка, например `en`.
+Для указания целевого языка нужно указать параметр `to%5B0%5D=` и код языка из первой апишки, например, `ru`.
 
 ```javascript
 const options = {
@@ -89,7 +90,7 @@ const options = {
 	body: '[{"Text":"I would really like to drive your car around the block a few times."}]'
 };
 
-fetch('https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=ru&api-version=3.0&profanityAction=NoAction&textType=plain', options)
+fetch('https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=ru&api-version=3.0&from=en&profanityAction=NoAction&textType=plain', options)
 	.then(response => response.json())
 	.then(response => console.log(response))
 	.catch(err => console.error(err));
