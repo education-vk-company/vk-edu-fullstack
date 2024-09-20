@@ -9,7 +9,7 @@
 - [Учебник JavaScript](http://learn.javascript.ru/js), в частности его разделы о [современных возможностях js](https://learn.javascript.ru/es-modern-usage) и [DOM](https://learn.javascript.ru/document).
 - [NodeJS инспектор (Nuxt) (для расширения кругозора)](https://nuxt.com/docs/guide/going-further/debugging)
 - [NodeJS инспектор (Next) (для расширения кругозора)](https://nextjs.org/docs/pages/building-your-application/configuring/debugging)
-- [NodeJS инспектор (NodeJS) (для расширения кругозора)](https://nodejs.org/en/learn/getting-started/debugging)
+- [NodeJS инспектор (NodeJS) (для расширения кругозора)](https://dev.to/vvo/5-steps-to-debugging-next-js-node-js-from-vscode-or-chrome-devtools-497o)
 
 ## Реализовать экран чата приложения Messenger
 
