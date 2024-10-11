@@ -1,7 +1,7 @@
 # Домашнее задание 5
 
 ## Ознакомиться с материалами и документацией по ссылкам
-- Закрепить знания [React.js](https://ru.reactjs.org/docs/getting-started.html)
+- Закрепить знания [React.js](https://react.dev/learn)
   - Вспомнить, как мы разворачивали свое окружение на лекции [тут](https://cloud.mail.ru/public/EsE5/ZAkXkn1kv). Мы будем использовать `Create React App` или `Vite` для скорости
   - Пройти [Tutorial](https://react.dev/learn/tutorial-tic-tac-toe)
   - Изучить [Docs](https://react.dev/learn)
