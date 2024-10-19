@@ -2,7 +2,7 @@
 
 ## Ознакомиться с документацией по ссылкам
 
-- Изучить [react-router](https://reacttraining.com/react-router/web/guides/quick-start)
+- Изучить [react-router](https://reactrouter.com/en/main/start/tutorial)
 
 ## Задание
 
