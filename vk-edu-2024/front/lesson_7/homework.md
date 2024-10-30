@@ -28,6 +28,8 @@
 * Backend доступен по https://vkedu-fullstack-div2.ru/api/
 * Настроить proxy для локальной разработки [по инструкции](https://create-react-app.dev/docs/proxying-api-requests-in-development/) или для [vite](https://www.geeksforgeeks.org/how-to-configure-proxy-in-vite/)
 
+*По любым вопросам/багам с backend писать в лс в телеграм: @kgrechin*
+
 ### Как можно сделать запросы в коде
 
 См. примеры в readme репозитория с backend.
