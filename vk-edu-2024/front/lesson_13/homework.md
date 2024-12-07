@@ -1,4 +1,4 @@
-# Домашнее задание 13 (обновляется, пока нельзя приступать)
+# Домашнее задание 13
 
 ## Ознакомиться с документацией по ссылкам
 
@@ -15,8 +15,7 @@
 
 В будущем эту утилиту нужно будет прикрутить к мессенджеру.
 
-- Получить `API key` по [ссылке](https://translate.yandex.com/developers/keys) (либо воспользоваться вариантом с [экзамена](../exam/exam.md))
-- Изучить документацию [API](https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/) и его методов
+- Изучить документацию [API](https://mymemory.translated.net/doc/spec.php) и его методов
 - Установить `TypeScript` на компьютер глобально
 - Создать в проекте папку `./ts/utils`
 - В папке `./ts/utils` сделать `tsc --init`
@@ -35,8 +34,7 @@
 ### Как проверить, что API работает:
 
 ```javascript
-const APIKEY = ''; // ваш ключ
-const api = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${APIKEY}&text=my name is john cena&lang=en-ru&format=plain`;
+const api = `https://api.mymemory.translated.net/get?q=${query}&langpair=${fromLanguage}|${toLanguage}`;
 
 fetch(api).then(response => response.json()).then(data => console.log(data));
 ```
