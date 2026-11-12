@@ -23,6 +23,7 @@ function AppReactRouter() {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/about/:aboutID" element={<About />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/feedback" element={<Feedback />} />
           </Routes>
