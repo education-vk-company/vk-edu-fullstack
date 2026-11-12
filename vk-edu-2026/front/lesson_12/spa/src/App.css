@@ -1,0 +1,26 @@
+ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  display: block;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background-color: #ccc;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+

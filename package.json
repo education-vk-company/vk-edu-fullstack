@@ -11,5 +11,8 @@
   "bugs": {
     "url": "https://github.com/track-mail-ru/vk-edu-fullstack/issues"
   },
-  "homepage": "https://github.com/track-mail-ru/vk-edu-fullstack#readme"
+  "homepage": "https://github.com/track-mail-ru/vk-edu-fullstack#readme",
+  "dependencies": {
+    "react-router-dom": "^7.18.5"
+  }
 }
