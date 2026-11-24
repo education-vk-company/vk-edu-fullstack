@@ -1,2 +1,0 @@
-import{createDynamicMiddleware as e}from"@reduxjs/toolkit";import{ReactReduxContext as t,createDispatchHook as n,useDispatch as r}from"react-redux";export*from"@reduxjs/toolkit";const i=()=>{let i=e(),a=(e=t)=>{let a=e===t?r:n(e);function o(...e){return i.addMiddleware(...e),a}return o.withTypes=()=>o,o},o=a();return{...i,createDispatchWithMiddlewareHookFactory:a,createDispatchWithMiddlewareHook:o}};export{i as createDynamicMiddleware};
-//# sourceMappingURL=redux-toolkit-react.browser.mjs.map

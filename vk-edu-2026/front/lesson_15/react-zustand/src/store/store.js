@@ -23,9 +23,7 @@ export const useUsersStore = create((set) => ({
       .then((response) => {
         set({
           users: {
-            loading: false,
             users: response.data,
-            error: null,
           },
         })
       })
